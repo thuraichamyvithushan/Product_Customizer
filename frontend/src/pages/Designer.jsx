@@ -77,15 +77,17 @@ const Designer = () => {
     const canvas = canvasRef.current;
     if (!canvas || !templateImage) return;
 
-    // Clear existing background
+    // Clear existing background and user images
     canvas.setBackgroundColor(null, () => {
-      // Clear all objects except user-uploaded images
+      // Clear all user-uploaded objects
       const objects = canvas.getObjects();
       objects.forEach((obj) => {
         if (obj.selectable) {
           canvas.remove(obj);
         }
       });
+      // Clear user custom image state
+      setUserCustomImage(null);
 
       // Load new template as background
       fabric.Image.fromURL(
@@ -107,9 +109,14 @@ const Designer = () => {
     });
   };
 
+  const [userCustomImage, setUserCustomImage] = useState(null);
+
   const addImageToCanvas = (dataUrl) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+
+    // Store the user's uploaded image
+    setUserCustomImage(dataUrl);
 
     fabric.Image.fromURL(
       dataUrl,
@@ -178,8 +185,9 @@ const Designer = () => {
       setItem({
         phoneModel: model.name,
         modelId: model._id,
-        designImage,
-        templateImage: selectedTemplate
+        designImage, // Final combined design (template + user image)
+        templateImage: selectedTemplate, // The selected template background
+        userCustomImage: userCustomImage || "" // User's uploaded image
       });
       navigate("/checkout");
     } catch {
@@ -206,6 +214,7 @@ const Designer = () => {
                   onChange={(e) => {
                     setSelectedModelId(e.target.value);
                     setSelectedTemplateIndex(0);
+                    setUserCustomImage(null); // Clear user image when model changes
                   }}
                   className="rounded-xl border border-slate-200 px-4 py-3"
                   disabled={models.length === 0}

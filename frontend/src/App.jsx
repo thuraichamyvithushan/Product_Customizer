@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer.jsx"
 import Home from "./pages/Home.jsx";
 import Designer from "./pages/Designer.jsx";
 import Login from "./pages/Login.jsx";
@@ -15,6 +16,9 @@ import UserDashboard from "./pages/user/UserDashboard.jsx";
 import MyOrders from "./pages/user/MyOrders.jsx";
 import MyCart from "./pages/user/MyCart.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
+import PetHome from "./pages/PetHome.jsx";
+import PhoneHome from "./pages/PhoneHome.jsx";
+// import Footer from "./components/Footer.jsx";
 
 const ADMIN_STORAGE_KEY = "cpc_admin_token";
 
@@ -42,6 +46,7 @@ const AppLayout = ({ children }) => {
     <>
       {!isAdminRoute && <Navbar />}
       {children}
+       {!isAdminRoute && <Footer />}
     </>
   );
 };
@@ -51,6 +56,8 @@ const App = () => {
     <AppLayout>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/pet-center" element={<PetHome />} />
+        <Route path="/custom-mobilecase" element={<PhoneHome />} />
         <Route path="/design" element={<Designer />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

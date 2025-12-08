@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Ensure custom colors are available */
+@layer utilities {
+  .bg-brand {
+    background-color: #0a214f;
+  }
+  .bg-brand-dark {
+    background-color: #061429;
+  }
+  .bg-brand-light {
+    background-color: #1a3a6b;
+  }
+  .text-brand {
+    color: #0a214f;
+  }
+  .border-brand {
+    border-color: #0a214f;
+  }
+  .bg-accent {
+    background-color: #fe7245;
+  }
+  .bg-accent-dark {
+    background-color: #e55a2b;
+  }
+  .bg-accent-light {
+    background-color: #ff8a66;
+  }
+  .text-accent {
+    color: #fe7245;
+  }
+  .border-accent {
+    border-color: #fe7245;
+  }
+  .hover\:bg-accent-dark:hover {
+    background-color: #e55a2b;
+  }
+  .hover\:bg-brand:hover {
+    background-color: #0a214f;
+  }
+}
+

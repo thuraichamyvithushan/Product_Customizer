@@ -17,6 +17,7 @@ const PhoneModelManager = () => {
   const [error, setError] = useState("");
   const [selectedModel, setSelectedModel] = useState(null);
   const [addingTemplate, setAddingTemplate] = useState(false);
+  const [fetched, setFetched] = useState(false); // <--- added state
 
   const loadModels = async () => {
     try {
@@ -24,6 +25,8 @@ const PhoneModelManager = () => {
       setModels(data);
     } catch (err) {
       console.error(err);
+    } finally {
+      setFetched(true); // <--- mark fetch as done
     }
   };
 
@@ -136,7 +139,6 @@ const PhoneModelManager = () => {
 
       const imageDataUrls = await Promise.all(filePromises);
 
-      // Add all templates sequentially
       for (const imageData of imageDataUrls) {
         try {
           await adminAddTemplateToModel(modelId, imageData, token);
@@ -265,7 +267,13 @@ const PhoneModelManager = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {models.length === 0 ? (
+              {!fetched ? (
+                <tr>
+                  <td colSpan="6" className="px-4 py-6 text-center text-slate-500">
+                    Loading phone models...
+                  </td>
+                </tr>
+              ) : models.length === 0 ? (
                 <tr>
                   <td colSpan="6" className="px-4 py-6 text-center text-slate-500">
                     No phone models yet.

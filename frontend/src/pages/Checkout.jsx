@@ -48,7 +48,9 @@ const Checkout = () => {
       await saveOrder(
         {
           phoneModel: item.phoneModel,
-          designImage: item.designImage,
+          designImage: item.designImage, // Final combined design
+          templateImage: item.templateImage || "", // Template background
+          userCustomImage: item.userCustomImage || "", // User's uploaded image
           fullName: form.fullName,
           email: form.email,
           phone: form.phone,
