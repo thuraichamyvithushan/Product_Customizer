@@ -194,52 +194,79 @@ const OrderList = () => {
         </div>
       </main>
       {selectedOrder && (
-        <div className="fixed inset-0 z-20 flex items-center justify-center bg-black/60 px-4">
-          <div className="max-w-md rounded-2xl bg-white p-4 shadow-xl">
-            <div className="mb-3 flex items-center justify-between gap-4">
-              <div>
-                <h2 className="text-lg font-semibold text-slate-800">Order preview</h2>
-                <p className="text-xs text-slate-500">{selectedOrder._id}</p>
-              </div>
-              <button
-                onClick={() => setSelectedOrder(null)}
-                className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-200"
-              >
-                Close
-              </button>
-            </div>
-            <div className="flex flex-col gap-3">
-              <div className="flex justify-center">
-                <img
-                  src={selectedOrder.designImage}
-                  alt="full design"
-                  className="h-80 rounded-2xl border border-slate-200 bg-slate-900/5 object-contain p-2"
-                />
-              </div>
-              <div className="space-y-1 text-xs text-slate-600">
-                <p>
-                  <span className="font-semibold">Customer:</span> {selectedOrder.fullName} (
-                  {selectedOrder.email})
-                </p>
-                <p>
-                  <span className="font-semibold">Phone:</span> {selectedOrder.phone}
-                </p>
-                <p>
-                  <span className="font-semibold">Model:</span> {selectedOrder.phoneModel}
-                </p>
-                <p>
-                  <span className="font-semibold">Quantity:</span> {selectedOrder.quantity}
-                </p>
-                <p>
-                  <span className="font-semibold">Address:</span> {selectedOrder.address}
-                </p>
-                <p>
-                  <span className="font-semibold">Status:</span> {selectedOrder.status}
-                </p>
-              </div>
-            </div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+  <div className="w-full max-w-lg rounded-2xl bg-white p-4 shadow-xl overflow-y-auto max-h-[90vh]">
+
+    {/* Header */}
+    <div className="mb-4 flex items-center justify-between">
+      <div>
+        <h2 className="text-lg font-semibold text-slate-800">Order Preview</h2>
+        <p className="text-xs text-slate-500">{selectedOrder._id}</p>
+      </div>
+      <button
+        onClick={() => setSelectedOrder(null)}
+        className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-200"
+      >
+        Close
+      </button>
+    </div>
+
+    <div className="flex flex-col gap-4">
+
+      {/* Final Design */}
+      <div>
+        <h3 className="mb-2 text-sm font-semibold text-slate-800">Final Customized Design</h3>
+        <div className="flex justify-center">
+          <img
+            src={selectedOrder.designImage}
+            alt="final customized design"
+            className="max-h-80 w-full rounded-2xl border border-slate-200 bg-slate-100 object-contain p-2"
+          />
+        </div>
+      </div>
+
+      {/* User Uploaded Image */}
+      {selectedOrder.userCustomImage && (
+        <div>
+          <h3 className="mb-2 text-sm font-semibold text-slate-800">User's Uploaded Image</h3>
+          <div className="flex justify-center">
+            <img
+              src={selectedOrder.userCustomImage}
+              alt="user custom image"
+              className="max-h-60 w-full rounded-2xl border border-slate-200 bg-slate-100 object-contain p-2"
+            />
           </div>
         </div>
+      )}
+
+      {/* Template Image */}
+      {selectedOrder.templateImage && (
+        <div>
+          <h3 className="mb-2 text-sm font-semibold text-slate-800">Template Background</h3>
+          <div className="flex justify-center">
+            <img
+              src={selectedOrder.templateImage}
+              alt="template background"
+              className="max-h-60 w-full rounded-2xl border border-slate-200 bg-slate-100 object-contain p-2"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Customer Details */}
+      <div className="space-y-1 text-sm text-slate-600">
+        <p><span className="font-semibold">Customer:</span> {selectedOrder.fullName} ({selectedOrder.email})</p>
+        <p><span className="font-semibold">Phone:</span> {selectedOrder.phone}</p>
+        <p><span className="font-semibold">Model:</span> {selectedOrder.phoneModel}</p>
+        <p><span className="font-semibold">Quantity:</span> {selectedOrder.quantity}</p>
+        <p><span className="font-semibold">Address:</span> {selectedOrder.address}</p>
+        <p><span className="font-semibold">Status:</span> {selectedOrder.status}</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+ 
       )}
     </div>
   );

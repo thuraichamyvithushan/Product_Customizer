@@ -15,6 +15,14 @@ const orderSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    templateImage: {
+      type: String,
+      default: ""
+    },
+    userCustomImage: {
+      type: String,
+      default: ""
+    },
     fullName: {
       type: String,
       required: true,

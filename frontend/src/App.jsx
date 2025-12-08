@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer.jsx"
 import Home from "./pages/Home.jsx";
 import Designer from "./pages/Designer.jsx";
 import Login from "./pages/Login.jsx";
@@ -15,6 +16,7 @@ import UserDashboard from "./pages/user/UserDashboard.jsx";
 import MyOrders from "./pages/user/MyOrders.jsx";
 import MyCart from "./pages/user/MyCart.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
+// import Footer from "./components/Footer.jsx";
 
 const ADMIN_STORAGE_KEY = "cpc_admin_token";
 
@@ -42,6 +44,7 @@ const AppLayout = ({ children }) => {
     <>
       {!isAdminRoute && <Navbar />}
       {children}
+       {!isAdminRoute && <Footer />}
     </>
   );
 };
