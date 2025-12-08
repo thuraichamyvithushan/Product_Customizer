@@ -1,4 +1,4 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useCart } from "../context/CartContext.jsx";
 import { useState, useEffect, useRef } from "react";
@@ -8,10 +8,15 @@ const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuth();
   const { item } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [infoOpen, setInfoOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const profileRef = useRef(null);
+  const infoRef = useRef(null);
+
+  const isInfoPageActive = location.pathname === "/about" || location.pathname === "/contact" || location.pathname === "/faq";
 
   const handleLogout = () => {
     logout();
@@ -36,6 +41,9 @@ const Navbar = () => {
     const handleClickOutside = (event) => {
       if (profileRef.current && !profileRef.current.contains(event.target)) {
         setProfileOpen(false);
+      }
+      if (infoRef.current && !infoRef.current.contains(event.target)) {
+        setInfoOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -93,6 +101,104 @@ const Navbar = () => {
           >
             Design
           </NavLink>
+
+          <NavLink
+            to="/blog"
+            className={({ isActive }) =>
+              `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                isActive
+                  ? "text-[#fe7245] bg-white/10"
+                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
+              }`
+            }
+          >
+            Blog
+          </NavLink>
+
+          <NavLink
+            to="/store-locator"
+            className={({ isActive }) =>
+              `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                isActive
+                  ? "text-[#fe7245] bg-white/10"
+                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
+              }`
+            }
+          >
+            Store Locator
+          </NavLink>
+
+          {/* INFO DROPDOWN */}
+          <div className="relative" ref={infoRef}>
+            <button
+              onClick={() => setInfoOpen(!infoOpen)}
+              className={`px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all flex items-center gap-1 ${
+                infoOpen || isInfoPageActive
+                  ? "text-[#fe7245] bg-white/10"
+                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
+              }`}
+            >
+              Info
+              <svg
+                className={`w-4 h-4 transition-transform ${infoOpen ? "rotate-180" : ""}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            {/* DROPDOWN MENU */}
+            {infoOpen && (
+              <div className="absolute right-0 mt-2 w-48 rounded-xl bg-white shadow-xl py-2 border border-gray-100 z-50">
+                <NavLink
+                  to="/about"
+                  onClick={() => setInfoOpen(false)}
+                  className={({ isActive }) =>
+                    `block px-4 py-2.5 text-sm font-medium transition-colors ${
+                      isActive
+                        ? "text-[#fe7245] bg-blue-50"
+                        : "text-gray-700 hover:text-[#fe7245] hover:bg-blue-50"
+                    }`
+                  }
+                >
+                  About Us
+                </NavLink>
+                <NavLink
+                  to="/contact"
+                  onClick={() => setInfoOpen(false)}
+                  className={({ isActive }) =>
+                    `block px-4 py-2.5 text-sm font-medium transition-colors ${
+                      isActive
+                        ? "text-[#fe7245] bg-blue-50"
+                        : "text-gray-700 hover:text-[#fe7245] hover:bg-blue-50"
+                    }`
+                  }
+                >
+                  Contact
+                </NavLink>
+                <NavLink
+                  to="/faq"
+                  onClick={() => setInfoOpen(false)}
+                  className={({ isActive }) =>
+                    `block px-4 py-2.5 text-sm font-medium transition-colors ${
+                      isActive
+                        ? "text-[#fe7245] bg-blue-50"
+                        : "text-gray-700 hover:text-[#fe7245] hover:bg-blue-50"
+                    }`
+                  }
+                >
+                  FAQ
+                </NavLink>
+              </div>
+            )}
+          </div>
 
           {/* CART */}
           {isAuthenticated && item && user?.role !== "admin" && (
@@ -234,13 +340,6 @@ const Navbar = () => {
             </>
           )}
 
-          {/* CONTACT US */}
-          <NavLink
-            to="/contact"
-            className="ml-2 px-5 py-2 text-sm font-semibold rounded-full bg-[#fe7245] text-white shadow-md transition-all hover:bg-[#ff855f] hover:shadow-lg hover:scale-105"
-          >
-            Contact Us
-          </NavLink>
         </div>
 
         {/* MOBILE TOGGLE BUTTON */}
@@ -315,6 +414,115 @@ const Navbar = () => {
           >
             Design
           </NavLink>
+
+          <NavLink
+            to="/blog"
+            onClick={() => setOpen(false)}
+            className={({ isActive }) =>
+              `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                isActive
+                  ? "text-[#fe7245] bg-white/10"
+                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
+              }`
+            }
+          >
+            Blog
+          </NavLink>
+
+          <NavLink
+            to="/store-locator"
+            onClick={() => setOpen(false)}
+            className={({ isActive }) =>
+              `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                isActive
+                  ? "text-[#fe7245] bg-white/10"
+                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
+              }`
+            }
+          >
+            Store Locator
+          </NavLink>
+
+          {/* INFO DROPDOWN MOBILE */}
+          <div className="space-y-1">
+            <button
+              onClick={() => setInfoOpen(!infoOpen)}
+              className={`w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-lg transition-all ${
+                infoOpen || isInfoPageActive
+                  ? "text-[#fe7245] bg-white/10"
+                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
+              }`}
+            >
+              <span>Info</span>
+              <svg
+                className={`w-4 h-4 transition-transform ${infoOpen ? "rotate-180" : ""}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            {/* DROPDOWN ITEMS */}
+            {infoOpen && (
+              <div className="pl-4 space-y-1">
+                <NavLink
+                  to="/about"
+                  onClick={() => {
+                    setInfoOpen(false);
+                    setOpen(false);
+                  }}
+                  className={({ isActive }) =>
+                    `block px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                      isActive
+                        ? "text-[#fe7245] bg-white/10"
+                        : "text-white/80 hover:text-[#fe7245] hover:bg-white/5"
+                    }`
+                  }
+                >
+                  About Us
+                </NavLink>
+                <NavLink
+                  to="/contact"
+                  onClick={() => {
+                    setInfoOpen(false);
+                    setOpen(false);
+                  }}
+                  className={({ isActive }) =>
+                    `block px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                      isActive
+                        ? "text-[#fe7245] bg-white/10"
+                        : "text-white/80 hover:text-[#fe7245] hover:bg-white/5"
+                    }`
+                  }
+                >
+                  Contact
+                </NavLink>
+                <NavLink
+                  to="/faq"
+                  onClick={() => {
+                    setInfoOpen(false);
+                    setOpen(false);
+                  }}
+                  className={({ isActive }) =>
+                    `block px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                      isActive
+                        ? "text-[#fe7245] bg-white/10"
+                        : "text-white/80 hover:text-[#fe7245] hover:bg-white/5"
+                    }`
+                  }
+                >
+                  FAQ
+                </NavLink>
+              </div>
+            )}
+          </div>
 
           {/* CART */}
           {isAuthenticated && item && user?.role !== "admin" && (
@@ -437,14 +645,6 @@ const Navbar = () => {
             </>
           )}
 
-          {/* CONTACT US */}
-          <NavLink
-            to="/contact"
-            onClick={() => setOpen(false)}
-            className="block px-4 py-3 text-sm font-semibold rounded-lg bg-[#fe7245] text-white text-center transition-all hover:bg-[#ff855f]"
-          >
-            Contact Us
-          </NavLink>
         </div>
       </div>
     </nav>

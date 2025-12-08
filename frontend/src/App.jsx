@@ -15,6 +15,11 @@ import UserManager from "./admin/UserManager.jsx";
 import UserDashboard from "./pages/user/UserDashboard.jsx";
 import MyOrders from "./pages/user/MyOrders.jsx";
 import MyCart from "./pages/user/MyCart.jsx";
+import FAQ from "./pages/FAQ.jsx";
+import Contact from "./pages/Contact.jsx";
+import About from "./pages/About.jsx";
+import StoreLocator from "./pages/StoreLocator.jsx";
+import Blog from "./pages/Blog.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
 // import Footer from "./components/Footer.jsx";
 
@@ -59,6 +64,11 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/success" element={<Success />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/store-locator" element={<StoreLocator />} />
+        <Route path="/blog" element={<Blog />} />
 
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route

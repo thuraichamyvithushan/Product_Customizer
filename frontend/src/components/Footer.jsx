@@ -106,6 +106,22 @@ const Footer = () => {
                   Contact Us
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/store-locator"
+                  className="text-sm text-gray-300 transition-colors hover:text-[#fe7245] hover:translate-x-1 inline-block"
+                >
+                  Store Locator
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/blog"
+                  className="text-sm text-gray-300 transition-colors hover:text-[#fe7245] hover:translate-x-1 inline-block"
+                >
+                  Blog
+                </Link>
+              </li>
             </ul>
           </div>
 
