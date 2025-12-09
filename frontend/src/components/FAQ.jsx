@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import cover1 from "../assets/cover1.png";
-import faq1 from "../assets/faq1.jpg";
+import cover1 from "../assets/cover1.webp";
+import faq1 from "../assets/faq1.webp";
 
 const FAQ = () => {
   const [openSection, setOpenSection] = useState(null);

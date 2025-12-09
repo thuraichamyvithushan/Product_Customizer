@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import cover1 from "../assets/cover1.png";
+import cover1 from "../assets/cover1.webp";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 

@@ -69,6 +69,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className="text-sm text-gray-300 transition-colors hover:text-[#fe7245] hover:translate-x-1 inline-block"
                 >
                   Home
@@ -77,6 +78,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/design"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className="text-sm text-gray-300 transition-colors hover:text-[#fe7245] hover:translate-x-1 inline-block"
                 >
                   Design Studio
@@ -85,6 +87,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/about"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className="text-sm text-gray-300 transition-colors hover:text-[#fe7245] hover:translate-x-1 inline-block"
                 >
                   About Us
@@ -93,6 +96,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/gallery"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className="text-sm text-gray-300 transition-colors hover:text-[#fe7245] hover:translate-x-1 inline-block"
                 >
                   Gallery
@@ -101,6 +105,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/contact"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className="text-sm text-gray-300 transition-colors hover:text-[#fe7245] hover:translate-x-1 inline-block"
                 >
                   Contact Us
@@ -109,6 +114,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/store-locator"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className="text-sm text-gray-300 transition-colors hover:text-[#fe7245] hover:translate-x-1 inline-block"
                 >
                   Store Locator
@@ -117,6 +123,7 @@ const Footer = () => {
               <li>
                 <Link
                   to="/blog"
+                  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                   className="text-sm text-gray-300 transition-colors hover:text-[#fe7245] hover:translate-x-1 inline-block"
                 >
                   Blog

@@ -65,6 +65,7 @@ const Navbar = () => {
         {/* LOGO */}
         <Link
           to="/"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="flex items-center gap-2 transition-transform hover:scale-105"
         >
           <img
@@ -78,6 +79,7 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center gap-1 xl:gap-2">
           <NavLink
             to="/"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className={({ isActive }) =>
               `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                 isActive
@@ -91,6 +93,7 @@ const Navbar = () => {
 
           <NavLink
             to="/design"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className={({ isActive }) =>
               `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                 isActive
@@ -104,6 +107,7 @@ const Navbar = () => {
 
           <NavLink
             to="/blog"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className={({ isActive }) =>
               `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                 isActive
@@ -117,6 +121,7 @@ const Navbar = () => {
 
           <NavLink
             to="/store-locator"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className={({ isActive }) =>
               `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                 isActive
@@ -159,7 +164,10 @@ const Navbar = () => {
               <div className="absolute right-0 mt-2 w-48 rounded-xl bg-white shadow-xl py-2 border border-gray-100 z-50">
                 <NavLink
                   to="/about"
-                  onClick={() => setInfoOpen(false)}
+                  onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    setInfoOpen(false);
+                  }}
                   className={({ isActive }) =>
                     `block px-4 py-2.5 text-sm font-medium transition-colors ${
                       isActive
@@ -172,7 +180,10 @@ const Navbar = () => {
                 </NavLink>
                 <NavLink
                   to="/contact"
-                  onClick={() => setInfoOpen(false)}
+                  onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    setInfoOpen(false);
+                  }}
                   className={({ isActive }) =>
                     `block px-4 py-2.5 text-sm font-medium transition-colors ${
                       isActive
@@ -185,7 +196,10 @@ const Navbar = () => {
                 </NavLink>
                 <NavLink
                   to="/faq"
-                  onClick={() => setInfoOpen(false)}
+                  onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    setInfoOpen(false);
+                  }}
                   className={({ isActive }) =>
                     `block px-4 py-2.5 text-sm font-medium transition-colors ${
                       isActive
@@ -389,7 +403,10 @@ const Navbar = () => {
         <div className="px-4 pt-4 pb-6 space-y-2 bg-[#0a214f] border-t border-white/10">
           <NavLink
             to="/"
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              setOpen(false);
+            }}
             className={({ isActive }) =>
               `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
                 isActive
@@ -403,7 +420,10 @@ const Navbar = () => {
 
           <NavLink
             to="/design"
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              setOpen(false);
+            }}
             className={({ isActive }) =>
               `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
                 isActive
@@ -417,7 +437,10 @@ const Navbar = () => {
 
           <NavLink
             to="/blog"
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              setOpen(false);
+            }}
             className={({ isActive }) =>
               `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
                 isActive
@@ -431,7 +454,10 @@ const Navbar = () => {
 
           <NavLink
             to="/store-locator"
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              setOpen(false);
+            }}
             className={({ isActive }) =>
               `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
                 isActive
@@ -475,6 +501,7 @@ const Navbar = () => {
                 <NavLink
                   to="/about"
                   onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                     setInfoOpen(false);
                     setOpen(false);
                   }}
@@ -491,6 +518,7 @@ const Navbar = () => {
                 <NavLink
                   to="/contact"
                   onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                     setInfoOpen(false);
                     setOpen(false);
                   }}
@@ -507,6 +535,7 @@ const Navbar = () => {
                 <NavLink
                   to="/faq"
                   onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                     setInfoOpen(false);
                     setOpen(false);
                   }}

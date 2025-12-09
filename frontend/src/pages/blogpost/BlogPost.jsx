@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
-import cover1 from "../../assets/cover1.png";
+import React, { useEffect, useState } from "react";
+import { useParams, Link, useLocation } from "react-router-dom";
+import cover1 from "../../assets/cover1.webp";
 import { allPosts } from "./posts/index.js";
 
 const BlogPost = () => {
   const { id } = useParams();
+  const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
   const [contentVisible, setContentVisible] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
   const currentPostId = parseInt(id);
   const post = allPosts[currentPostId];
   
@@ -19,10 +21,22 @@ const BlogPost = () => {
   const nextPost = nextPostId ? allPosts[nextPostId] : null;
 
   useEffect(() => {
-    setIsVisible(true);
-    setTimeout(() => setContentVisible(true), 300);
-    window.scrollTo(0, 0);
-  }, [id]);
+    // Scroll to top immediately
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Reset states when route changes
+    setIsVisible(false);
+    setContentVisible(false);
+    setIsExiting(false);
+    
+    // Small delay to allow exit animation if needed
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+      setTimeout(() => setContentVisible(true), 300);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, [id, location.pathname]);
 
   if (!post) {
     return (
@@ -36,7 +50,19 @@ const BlogPost = () => {
   }
 
   return (
-    <div className="min-h-screen pt-0 pb-6 md:pb-8 relative overflow-hidden" style={{
+    <div className="relative">
+      {/* Page Transition Overlay */}
+      {isExiting && (
+        <div className="fixed inset-0 bg-gradient-to-br from-[#0a214f] to-[#1a3a6b] z-50 flex items-center justify-center transition-opacity duration-300">
+          <div className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
+        </div>
+      )}
+      
+      <div 
+        className={`min-h-screen pt-0 pb-6 md:pb-8 relative overflow-hidden transition-all duration-700 ease-in-out ${
+          isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
+        } ${isExiting ? "opacity-0 -translate-x-8" : ""}`}
+        style={{
       backgroundImage: `
         radial-gradient(circle at 20% 50%, rgba(10, 33, 79, 0.08) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(254, 114, 69, 0.06) 0%, transparent 50%),
@@ -68,7 +94,9 @@ const BlogPost = () => {
 
       <div className="relative z-10">
         {/* Hero Section */}
-        <div className="relative w-full h-[450px] md:h-[550px] mb-16 overflow-hidden">
+        <div className={`relative w-full h-[450px] md:h-[550px] mb-16 overflow-hidden transition-all duration-700 ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        }`}>
           <div className="absolute inset-0" style={{
             backgroundImage: `url(${cover1})`,
             backgroundSize: 'cover',
@@ -76,11 +104,11 @@ const BlogPost = () => {
             filter: 'blur(2px)',
           }}></div>
           <div className="absolute inset-0 bg-gradient-to-br from-[#0a214f]/85 via-[#1a3a6b]/85 to-[#0a214f]/85"></div>
-          <div className="relative z-10 max-w-5xl mx-auto px-4 h-full flex items-center justify-center text-center">
+          <div className="relative z-10 max-w-7xl mx-auto px-4 h-full flex items-center justify-center text-center">
             <div className="w-full">
               <div className={`mb-6 transition-all duration-700 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
-              }`} style={{ transitionDelay: '0ms' }}>
+              }`} style={{ transitionDelay: '100ms' }}>
                 <div className="inline-flex items-center gap-2 px-4 py-2 backdrop-blur-md bg-white/10 rounded-full border border-white/20">
                   <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -113,11 +141,11 @@ const BlogPost = () => {
         </div>
 
         {/* Main Content */}
-        <div className="max-w-5xl mx-auto px-4 md:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8">
           {/* Featured Image Card */}
-          <div className={`mb-12 transition-all duration-700 ${
+          <div className={`mb-12 transition-all duration-700 ease-out ${
             contentVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-10 scale-95"
-          }`} style={{ transitionDelay: '200ms' }}>
+          }`} style={{ transitionDelay: '300ms' }}>
             <div className="relative group overflow-hidden rounded-3xl shadow-2xl">
               <div className="absolute inset-0 backdrop-blur-xl bg-white/40 rounded-3xl border border-white/30 p-2 group-hover:bg-white/60 transition-all duration-500"></div>
               <img 
@@ -130,9 +158,9 @@ const BlogPost = () => {
           </div>
 
           {/* Article Content */}
-          <article className={`relative backdrop-blur-xl bg-white/60 rounded-3xl shadow-2xl p-8 md:p-10 lg:p-14 border border-white/30 overflow-hidden transition-all duration-700 group hover:bg-white/80 ${
-            contentVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`} style={{ transitionDelay: '400ms' }}>
+          <article className={`relative backdrop-blur-xl bg-white/60 rounded-3xl shadow-2xl p-8 md:p-10 lg:p-14 border border-white/30 overflow-hidden transition-all duration-700 ease-out group hover:bg-white/80 ${
+            contentVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-10 scale-95"
+          }`} style={{ transitionDelay: '500ms' }}>
             {/* Decorative elements */}
             <div className="absolute top-0 left-0 w-48 h-48 bg-gradient-to-br from-[#0a214f]/20 to-transparent rounded-br-full"></div>
             <div className="absolute bottom-0 right-0 w-48 h-48 bg-gradient-to-tl from-[#fe7245]/20 to-transparent rounded-tl-full"></div>
@@ -263,6 +291,10 @@ const BlogPost = () => {
                 {prevPost ? (
                   <Link
                     to={`/blog/${prevPostId}`}
+                    onClick={(e) => {
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                      setIsExiting(true);
+                    }}
                     className="group relative backdrop-blur-xl bg-white/60 rounded-2xl p-6 border border-white/30 hover:bg-white/80 hover:border-[#fe7245] hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] overflow-hidden"
                   >
                     <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#fe7245]/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -288,6 +320,10 @@ const BlogPost = () => {
                 {nextPost ? (
                   <Link
                     to={`/blog/${nextPostId}`}
+                    onClick={(e) => {
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                      setIsExiting(true);
+                    }}
                     className="group relative backdrop-blur-xl bg-white/60 rounded-2xl p-6 border border-white/30 hover:bg-white/80 hover:border-[#fe7245] hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] overflow-hidden"
                   >
                     <div className="absolute top-0 left-0 w-24 h-24 bg-gradient-to-br from-[#fe7245]/10 to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -314,7 +350,11 @@ const BlogPost = () => {
             {/* Back to Blog Button */}
             <div className="text-center pt-6">
               <Link 
-                to="/blog" 
+                to="/blog"
+                onClick={(e) => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                  setIsExiting(true);
+                }}
                 className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#fe7245] to-[#ff855f] text-white font-semibold rounded-2xl shadow-2xl hover:shadow-[0_20px_50px_rgba(254,114,69,0.4)] transition-all duration-300 hover:scale-105 transform text-lg"
               >
                 <svg className="w-6 h-6 transition-transform duration-300 group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -325,6 +365,7 @@ const BlogPost = () => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

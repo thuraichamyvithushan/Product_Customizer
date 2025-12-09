@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import cover1 from "../assets/cover1.png";
+import cover1 from "../assets/cover1.webp";
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);

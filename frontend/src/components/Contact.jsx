@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import cover1 from "../assets/cover1.png";
+import cover1 from "../assets/cover1.webp";
 
 const Contact = () => {
   const [formData, setFormData] = useState({

@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import cover1 from "../assets/cover1.png";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import cover1 from "../assets/cover1.webp";
 import blogImg1 from "../assets/blog/1.webp";
 import blogImg2 from "../assets/blog/2.webp";
 import blogImg3 from "../assets/blog/3.webp";
@@ -11,11 +11,23 @@ import blogImg7 from "../assets/blog/7.webp";
 import blogImg8 from "../assets/blog/8.webp";
 
 const Blog = () => {
+  const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true);
-  }, []);
+    // Scroll to top immediately
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    setIsVisible(false);
+    setIsExiting(false);
+    
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
 
   const blogPosts = [
     {
@@ -85,7 +97,17 @@ const Blog = () => {
   ];
 
   return (
-    <div className="min-h-screen pt-0 pb-6 md:pb-8 relative overflow-hidden" style={{
+    <div className="relative">
+      {/* Page Transition Overlay */}
+      {isExiting && (
+        <div className="fixed inset-0 bg-gradient-to-br from-[#0a214f] to-[#1a3a6b] z-50 flex items-center justify-center transition-opacity duration-300">
+          <div className="w-16 h-16 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
+        </div>
+      )}
+      
+      <div className={`min-h-screen pt-0 pb-6 md:pb-8 relative overflow-hidden transition-all duration-700 ease-in-out ${
+        isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
+      } ${isExiting ? "opacity-0 -translate-y-4 scale-95" : ""}`} style={{
       backgroundImage: `
         radial-gradient(circle at 20% 50%, rgba(10, 33, 79, 0.08) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(254, 114, 69, 0.06) 0%, transparent 50%),
@@ -174,8 +196,12 @@ const Blog = () => {
           <Link
             key={post.id}
             to={`/blog/${post.id}`}
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              setIsExiting(true);
+            }}
             className={`group relative backdrop-blur-xl bg-white/60 rounded-xl shadow-xl border border-white/30 overflow-hidden transition-all duration-500 hover:bg-white/80 hover:shadow-2xl hover:border-[#fe7245] hover:-translate-y-2 cursor-pointer block ${
-              isVisible ? "opacity-100" : "opacity-0"
+              isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
             }`}
             style={{
               animationDelay: `${idx * 100}ms`,
@@ -246,7 +272,8 @@ const Blog = () => {
           </div>
         </div>
       </div>
-        </div>
+      </div>
+      </div>
       </div>
     </div>
   );
