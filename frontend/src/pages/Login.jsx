@@ -62,12 +62,20 @@ const Login = () => {
             {loading ? "Signing in..." : "Login"}
           </button>
         </form>
-        <p className="mt-4 text-sm text-slate-500">
-          Need an account?{" "}
-          <Link to="/register" className="text-brand">
-            Register
-          </Link>
-        </p>
+        <div className="mt-4 space-y-2 text-sm">
+          <p className="text-slate-500">
+            Need an account?{" "}
+            <Link to="/register" className="text-brand">
+              Register
+            </Link>
+          </p>
+          <p className="text-slate-500">
+            Forgot your password?{" "}
+            <Link to="/forgot-password" className="text-brand">
+              Reset Password
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

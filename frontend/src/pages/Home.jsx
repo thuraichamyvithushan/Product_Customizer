@@ -46,13 +46,6 @@ const Home = () => {
       price: "$39.99",
       image: "https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=400&h=400&fit=crop",
       features: ["Card slots", "Genuine leather", "Stand function"]
-    },
-     {
-      id: 3,
-      name: "Leather Wallet Case",
-      price: "$39.99",
-      image: "https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=400&h=400&fit=crop",
-      features: ["Card slots", "Genuine leather", "Stand function"]
     }
   ];
 
@@ -77,14 +70,7 @@ const Home = () => {
       price: "$49.99",
       image: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&h=400&fit=crop",
       features: ["Soft cushion", "Washable cover", "Name embroidery"]
-    },
-     {
-      id: 3,
-      name: "Custom Pet Bed",
-      price: "$49.99",
-      image: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=400&h=400&fit=crop",
-      features: ["Soft cushion", "Washable cover", "Name embroidery"]
-    } 
+    }
   ];
 
   useEffect(() => {

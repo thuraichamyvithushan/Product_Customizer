@@ -3,20 +3,23 @@ import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx"
 import Home from "./pages/Home.jsx";
 import Designer from "./pages/Designer.jsx";
+import PetDesigner from "./pages/PetDesigner.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ResetPassword from "./pages/ResetPassword.jsx";
 import Success from "./pages/Success.jsx";
 import Checkout from "./pages/Checkout.jsx";
 import AdminLogin from "./admin/AdminLogin.jsx";
 import AdminDashboard from "./admin/AdminDashboard.jsx";
 import OrderList from "./admin/OrderList.jsx";
 import PhoneModelManager from "./admin/PhoneModelManager.jsx";
+import PetProductManager from "./admin/PetProductManager.jsx";
 import UserManager from "./admin/UserManager.jsx";
 import UserDashboard from "./pages/user/UserDashboard.jsx";
 import MyOrders from "./pages/user/MyOrders.jsx";
 import MyCart from "./pages/user/MyCart.jsx";
 import { useAuth } from "./context/AuthContext.jsx";
-// import Footer from "./components/Footer.jsx";
 
 const ADMIN_STORAGE_KEY = "cpc_admin_token";
 
@@ -55,8 +58,11 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/design" element={<Designer />} />
+        <Route path="pet-design" element={<PetDesigner/>}/>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/success" element={<Success />} />
         <Route path="/checkout" element={<Checkout />} />
 
@@ -77,11 +83,20 @@ const App = () => {
             </AdminRoute>
           }
         />
+
         <Route
           path="/admin/models"
           element={
             <AdminRoute>
               <PhoneModelManager />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin/pet-products"
+          element={
+            <AdminRoute>
+              <PetProductManager />
             </AdminRoute>
           }
         />

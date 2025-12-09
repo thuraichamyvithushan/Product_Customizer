@@ -2,20 +2,24 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
+// PUBLIC (client)
 const publicClient = axios.create({
-  baseURL: `${API_URL}/phone-models`
+  baseURL: `${API_URL}/pet-products`
 });
 
+// ADMIN (dashboard)
 const adminClient = axios.create({
-  baseURL: `${API_URL}/admin/phone-models`
+  baseURL: `${API_URL}/admin/pet-products`
 });
 
-export const fetchPhoneModels = async () => {
+
+export const fetchPetProducts = async () => {
   const { data } = await publicClient.get("/");
   return data;
 };
 
-export const adminCreatePhoneModel = async (payload, token) => {
+
+export const adminCreatePetProduct = async (payload, token) => {
   const { data } = await adminClient.post("/", payload, {
     headers: {
       Authorization: `Bearer ${token}`
@@ -24,7 +28,8 @@ export const adminCreatePhoneModel = async (payload, token) => {
   return data;
 };
 
-export const adminDeletePhoneModel = async (id, token) => {
+
+export const adminDeletePetProduct = async (id, token) => {
   const { data } = await adminClient.delete(`/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`
@@ -33,9 +38,10 @@ export const adminDeletePhoneModel = async (id, token) => {
   return data;
 };
 
-export const adminAddTemplateToModel = async (modelId, templateImage, token) => {
+
+export const adminAddTemplateToPet = async (productId, templateImage, token) => {
   const { data } = await adminClient.post(
-    `/${modelId}/templates`,
+    `/${productId}/templates`,
     { templateImage },
     {
       headers: {
@@ -46,19 +52,10 @@ export const adminAddTemplateToModel = async (modelId, templateImage, token) => 
   return data;
 };
 
-export const adminRemoveTemplateFromModel = async (modelId, templateIndex, token) => {
-  const { data } = await adminClient.delete(`/${modelId}/templates/${templateIndex}`, {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-  return data;
-};
 
-export const adminUpdateModelMockup = async (modelId, mockupImage, coverArea, coverSize, token) => {
-  const { data } = await adminClient.patch(
-    `/${modelId}/mockup`,
-    { mockupImage, coverArea, coverSize },
+export const adminRemoveTemplateFromPet = async (productId, templateIndex, token) => {
+  const { data } = await adminClient.delete(
+    `/${productId}/templates/${templateIndex}`,
     {
       headers: {
         Authorization: `Bearer ${token}`
@@ -69,3 +66,15 @@ export const adminUpdateModelMockup = async (modelId, mockupImage, coverArea, co
 };
 
 
+export const adminUpdatePetMockup = async (productId, mockupImage, coverArea, coverSize, token) => {
+  const { data } = await adminClient.patch(
+    `/${productId}/mockup`,
+    { mockupImage, coverArea, coverSize },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  );
+  return data;
+};

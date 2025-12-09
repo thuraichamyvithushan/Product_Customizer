@@ -7,22 +7,17 @@ const orderSchema = new mongoose.Schema(
       ref: "User",
       required: true
     },
-    phoneModel: {
-      type: String,
-      required: true
-    },
-    designImage: {
-      type: String,
-      required: true
-    },
-    templateImage: {
-      type: String,
-      default: ""
-    },
-    userCustomImage: {
-      type: String,
-      default: ""
-    },
+    items: [
+      {
+        productId: { type: String, required: true }, 
+        productName: { type: String, required: true },
+        designImage: { type: String, required: true },
+        templateImage: { type: String, default: "" },
+        userCustomImage: { type: String, default: "" },
+        price: { type: Number, required: true, default: 0 },
+        quantity: { type: Number, required: true, min: 1, default: 1 }
+      }
+    ],
     fullName: {
       type: String,
       required: true,
@@ -43,11 +38,10 @@ const orderSchema = new mongoose.Schema(
       required: true,
       trim: true
     },
-    quantity: {
+    total: {
       type: Number,
       required: true,
-      min: 1,
-      default: 1
+      default: 0
     },
     status: {
       type: String,

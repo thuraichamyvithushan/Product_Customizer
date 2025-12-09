@@ -3,7 +3,7 @@ import PhoneModel from "../models/PhoneModel.js";
 export const getPhoneModels = async (req, res, next) => {
   try {
     const models = await PhoneModel.find().sort({ createdAt: 1 });
-    res.json(models);
+    res.json(models); // price automatically included
   } catch (error) {
     next(error);
   }
@@ -11,13 +11,20 @@ export const getPhoneModels = async (req, res, next) => {
 
 export const createPhoneModel = async (req, res, next) => {
   try {
-    const { name, key, templateImage, templateImages } = req.body;
+    const { 
+      name, 
+      key, 
+      templateImage, 
+      templateImages, 
+      mockupImage, 
+      coverArea, 
+      price 
+    } = req.body;
 
     if (!name || !key) {
       return res.status(400).json({ message: "name and key are required" });
     }
 
-    // Support both single image (legacy) and multiple images
     const images = templateImages || (templateImage ? [templateImage] : []);
 
     if (images.length === 0) {
@@ -33,10 +40,56 @@ export const createPhoneModel = async (req, res, next) => {
       name,
       key: key.toLowerCase(),
       templateImages: images,
-      templateImage: images[0] // Set first image as legacy field for backward compatibility
+      templateImage: images[0],
+      mockupImage: mockupImage || "",
+      coverArea: coverArea || {
+        x: 0.1,
+        y: 0.15,
+        width: 0.8,
+        height: 0.7
+      },
+      coverSize: req.body.coverSize || {
+        width: 300,
+        height: 500
+      },
+      price: price || 1000 // ⭐ default price if not provided
     });
 
     res.status(201).json(model);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updatePhoneModelMockup = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const { mockupImage, coverArea, coverSize, price } = req.body;
+
+    const model = await PhoneModel.findById(id);
+    if (!model) {
+      return res.status(404).json({ message: "Phone model not found" });
+    }
+
+    if (mockupImage) {
+      model.mockupImage = mockupImage;
+    }
+
+    if (coverArea) {
+      model.coverArea = coverArea;
+    }
+
+    if (coverSize) {
+      model.coverSize = coverSize;
+    }
+
+    // ⭐ allow updating price
+    if (price !== undefined) {
+      model.price = price;
+    }
+
+    await model.save();
+    res.json(model);
   } catch (error) {
     next(error);
   }
@@ -56,13 +109,11 @@ export const addTemplateToModel = async (req, res, next) => {
       return res.status(404).json({ message: "Phone model not found" });
     }
 
-    // Add new template to array
     if (!model.templateImages) {
       model.templateImages = [];
     }
     model.templateImages.push(templateImage);
-    
-    // Update legacy field if it's the first image
+
     if (model.templateImages.length === 1) {
       model.templateImage = templateImage;
     }
@@ -89,8 +140,7 @@ export const removeTemplateFromModel = async (req, res, next) => {
     }
 
     model.templateImages.splice(index, 1);
-    
-    // Update legacy field if needed
+
     if (model.templateImages.length > 0) {
       model.templateImage = model.templateImages[0];
     } else {
@@ -113,5 +163,3 @@ export const deletePhoneModel = async (req, res, next) => {
     next(error);
   }
 };
-
-

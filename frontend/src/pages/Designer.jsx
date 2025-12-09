@@ -10,24 +10,17 @@ const Designer = () => {
   const canvasRef = useRef(null);
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  const { setItem } = useCart();
+  const { addItem } = useCart();
   const [models, setModels] = useState([]);
   const [selectedModelId, setSelectedModelId] = useState("");
   const [selectedTemplateIndex, setSelectedTemplateIndex] = useState(0);
   const [status, setStatus] = useState("");
   const [saving, setSaving] = useState(false);
+  const [textValue, setTextValue] = useState("");
+  const [textColor, setTextColor] = useState("#fe7245");
 
   useEffect(() => {
     const init = async () => {
-      const canvas = new fabric.Canvas(canvasEl.current, {
-        width: 300,
-        height: 500,
-        preserveObjectStacking: true,
-        selection: false
-      });
-
-      canvasRef.current = canvas;
-
       try {
         const loadedModels = await fetchPhoneModels();
         setModels(loadedModels);
@@ -42,6 +35,34 @@ const Designer = () => {
     };
 
     init();
+  }, []);
+
+  // Initialize canvas with cover size
+  useEffect(() => {
+    if (!canvasEl.current) return;
+
+    const model = models.find((m) => m._id === selectedModelId);
+    const coverSize = model?.coverSize || { width: 300, height: 500 };
+
+    if (canvasRef.current) canvasRef.current.dispose();
+
+    const canvas = new fabric.Canvas(canvasEl.current, {
+      width: coverSize.width,
+      height: coverSize.height,
+      preserveObjectStacking: true,
+      selection: false
+    });
+
+    canvasRef.current = canvas;
+
+    if (model && models.length > 0) {
+      const templates = getTemplates(model);
+      if (templates.length > 0 && selectedTemplateIndex < templates.length) {
+        setTimeout(() => {
+          loadTemplate(model, templates[selectedTemplateIndex]);
+        }, 100);
+      }
+    }
 
     return () => {
       if (canvasRef.current) {
@@ -49,8 +70,7 @@ const Designer = () => {
         canvasRef.current = null;
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [models, selectedModelId, selectedTemplateIndex]);
 
   const getTemplates = (model) => {
     if (!model) return [];
@@ -61,37 +81,27 @@ const Designer = () => {
       : [];
   };
 
-  useEffect(() => {
-    if (!canvasRef.current || models.length === 0 || !selectedModelId) return;
-    const model = models.find((m) => m._id === selectedModelId);
-    if (model) {
-      const templates = getTemplates(model);
-      if (templates.length > 0 && selectedTemplateIndex < templates.length) {
-        loadTemplate(templates[selectedTemplateIndex]);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedModelId, selectedTemplateIndex, models]);
-
-  const loadTemplate = (templateImage) => {
+  const loadTemplate = (model, templateImage) => {
     const canvas = canvasRef.current;
-    if (!canvas || !templateImage) return;
+    if (!canvas) return;
 
-    // Clear existing background and user images
     canvas.setBackgroundColor(null, () => {
-      // Clear all user-uploaded objects
       const objects = canvas.getObjects();
       objects.forEach((obj) => {
-        if (obj.selectable) {
-          canvas.remove(obj);
-        }
+        if (obj.selectable) canvas.remove(obj);
       });
-      // Clear user custom image state
+
       setUserCustomImage(null);
 
-      // Load new template as background
+      const backgroundImage = model.mockupImage || templateImage;
+
+      if (!backgroundImage) {
+        canvas.setBackgroundColor("#0f172a", canvas.renderAll.bind(canvas));
+        return;
+      }
+
       fabric.Image.fromURL(
-        templateImage,
+        backgroundImage,
         (img) => {
           img.selectable = false;
           img.evented = false;
@@ -113,36 +123,81 @@ const Designer = () => {
 
   const addImageToCanvas = (dataUrl) => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!canvas || !selectedModelId) return;
 
-    // Store the user's uploaded image
+    const model = models.find((m) => m._id === selectedModelId);
+    if (!model) return;
+
     setUserCustomImage(dataUrl);
 
     fabric.Image.fromURL(
       dataUrl,
       (img) => {
-        const scale = Math.min(
-          (canvas.width * 0.8) / img.width,
-          (canvas.height * 0.8) / img.height,
-          1
-        );
+        const existingObjects = canvas.getObjects().filter((obj) => obj.selectable);
+        existingObjects.forEach((obj) => canvas.remove(obj));
 
-        img.set({
-          left: canvas.width / 2,
-          top: canvas.height / 2,
-          originX: "center",
-          originY: "center",
-          cornerColor: "#ffffff",
-          cornerStyle: "circle",
-          borderColor: "#fe7245",
-          cornerStrokeColor: "#fe7245",
-          transparentCorners: false,
-          cornerSize: 14,
-          rotatingPointOffset: 30,
-          selectable: true,
-          evented: true
-        });
-        img.scale(scale);
+        if (model.mockupImage && model.coverArea) {
+          const coverArea = model.coverArea;
+          const coverX = canvas.width * coverArea.x;
+          const coverY = canvas.height * coverArea.y;
+          const coverWidth = canvas.width * coverArea.width;
+          const coverHeight = canvas.height * coverArea.height;
+
+          const scaleX = coverWidth / img.width;
+          const scaleY = coverHeight / img.height;
+          const scale = Math.max(scaleX, scaleY);
+
+          const scaledWidth = img.width * scale;
+          const scaledHeight = img.height * scale;
+          const left = coverX + (coverWidth - scaledWidth) / 2;
+          const top = coverY + (coverHeight - scaledHeight) / 2;
+
+          img.set({
+            left,
+            top,
+            originX: "left",
+            originY: "top",
+            cornerColor: "#ffffff",
+            cornerStyle: "circle",
+            borderColor: "#fe7245",
+            cornerStrokeColor: "#fe7245",
+            transparentCorners: false,
+            cornerSize: 14,
+            rotatingPointOffset: 30,
+            selectable: true,
+            hasControls: true,
+            hasBorders: true
+          });
+          img.scale(scale);
+        } else {
+          const scaleX = canvas.width / img.width;
+          const scaleY = canvas.height / img.height;
+          const scale = Math.max(scaleX, scaleY);
+
+          const scaledWidth = img.width * scale;
+          const scaledHeight = img.height * scale;
+          const left = (canvas.width - scaledWidth) / 2;
+          const top = (canvas.height - scaledHeight) / 2;
+
+          img.set({
+            left,
+            top,
+            originX: "left",
+            originY: "top",
+            cornerColor: "#ffffff",
+            cornerStyle: "circle",
+            borderColor: "#fe7245",
+            cornerStrokeColor: "#fe7245",
+            transparentCorners: false,
+            cornerSize: 14,
+            rotatingPointOffset: 30,
+            selectable: true,
+            hasControls: true,
+            hasBorders: true
+          });
+          img.scale(scale);
+        }
+
         canvas.add(img);
         canvas.setActiveObject(img);
         canvas.renderAll();
@@ -158,6 +213,26 @@ const Designer = () => {
     const reader = new FileReader();
     reader.onload = () => addImageToCanvas(reader.result);
     reader.readAsDataURL(file);
+  };
+
+  const handleAddText = () => {
+    const canvas = canvasRef.current;
+    if (!canvas || !textValue.trim()) return;
+
+    const text = new fabric.IText(textValue, {
+      left: canvas.width / 2,
+      top: canvas.height / 2,
+      originX: "center",
+      originY: "center",
+      fill: textColor,
+      fontSize: 24,
+      fontFamily: "Arial",
+      selectable: true
+    });
+    canvas.add(text);
+    canvas.setActiveObject(text);
+    canvas.renderAll();
+    setTextValue("");
   };
 
   const handleAddToCart = async () => {
@@ -176,19 +251,22 @@ const Designer = () => {
     if (!canvasRef.current) return;
     setSaving(true);
     setStatus("");
+
     try {
-      // Export canvas with both template background and user images
       const designImage = canvasRef.current.toDataURL({ format: "png", quality: 1 });
       const templates = getTemplates(model);
       const selectedTemplate = templates[selectedTemplateIndex] || templates[0];
 
-      setItem({
-        phoneModel: model.name,
-        modelId: model._id,
-        designImage, // Final combined design (template + user image)
-        templateImage: selectedTemplate, // The selected template background
-        userCustomImage: userCustomImage || "" // User's uploaded image
+      addItem({
+        productName: model.name,
+        productId: model._id,
+        price: model.price || 1000,
+        designImage,
+        templateImage: selectedTemplate,
+        userCustomImage: userCustomImage || "",
+        quantity: 1
       });
+
       navigate("/checkout");
     } catch {
       setStatus("Unable to add design to cart");
@@ -206,30 +284,34 @@ const Designer = () => {
         <div className="flex flex-col gap-6 md:flex-row md:items-start">
           <div className="flex-1 space-y-4">
             <h1 className="text-2xl font-semibold text-slate-800">Design your cover</h1>
+
+            {/* ⭐ ADDED PRICE DISPLAY */}
+            {selectedModel && (
+              <p className="text-lg font-bold text-accent">
+                Price: Rs {selectedModel.price || 1000}
+              </p>
+            )}
+
             <div className="grid gap-4 sm:grid-cols-2">
               <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
-                Phone Model
+                Product Model
                 <select
                   value={selectedModelId}
                   onChange={(e) => {
                     setSelectedModelId(e.target.value);
                     setSelectedTemplateIndex(0);
-                    setUserCustomImage(null); // Clear user image when model changes
+                    setUserCustomImage(null);
                   }}
                   className="rounded-xl border border-slate-200 px-4 py-3"
-                  disabled={models.length === 0}
                 >
-                  {models.length === 0 ? (
-                    <option value="">No models available</option>
-                  ) : (
-                    models.map((m) => (
-                      <option key={m._id} value={m._id}>
-                        {m.name}
-                      </option>
-                    ))
-                  )}
+                  {models.map((m) => (
+                    <option key={m._id} value={m._id}>
+                      {m.name}
+                    </option>
+                  ))}
                 </select>
               </label>
+
               <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
                 Upload Your Image
                 <input
@@ -238,6 +320,34 @@ const Designer = () => {
                   onChange={handleUpload}
                   className="rounded-xl border border-dashed border-slate-300 px-4 py-3"
                 />
+              </label>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="flex flex-col gap-2 text-sm font-medium text-slate-600">
+                Add Text
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={textValue}
+                    onChange={(e) => setTextValue(e.target.value)}
+                    className="flex-1 rounded-xl border border-slate-200 px-4 py-3"
+                    placeholder="Enter text"
+                  />
+                  <input
+                    type="color"
+                    value={textColor}
+                    onChange={(e) => setTextColor(e.target.value)}
+                    className="h-12 w-12 rounded-xl border border-slate-200"
+                  />
+                </div>
+                <button
+                  type="button"
+                  onClick={handleAddText}
+                  className="mt-2 inline-flex items-center justify-center rounded-xl bg-accent px-4 py-2 text-sm font-semibold text-white hover:bg-accent-dark"
+                >
+                  Add Text
+                </button>
               </label>
             </div>
 
@@ -270,7 +380,7 @@ const Designer = () => {
             )}
 
             <p className="text-sm text-slate-500">
-              Tip: Use high-resolution PNG/JPG files and keep key elements away from the edges.
+              Tip: Use high-resolution PNG/JPG files and avoid edges.
             </p>
             {status && <p className="text-sm text-red-500">{status}</p>}
             <button
@@ -281,6 +391,7 @@ const Designer = () => {
               {saving ? "Adding..." : "Add to Cart"}
             </button>
           </div>
+
           <div className="flex flex-1 justify-center">
             <div className="rounded-[32px] border border-slate-200 bg-slate-900/5 p-4">
               <canvas ref={canvasEl} width={300} height={500} />

@@ -6,7 +6,7 @@ import logo from "../assets/logo.PNG";
 
 const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuth();
-  const { item } = useCart();
+  const { items } = useCart();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
@@ -95,14 +95,14 @@ const Navbar = () => {
           </NavLink>
 
           {/* CART */}
-          {isAuthenticated && item && user?.role !== "admin" && (
+          {isAuthenticated && items.length > 0 && user?.role !== "admin" && (
             <NavLink
               to="/user/cart"
               className="relative rounded-full bg-[#fe7245] px-4 py-2 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#ff855f] hover:shadow-lg"
             >
               Cart
               <span className="ml-1.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-[#fe7245]">
-                1
+                {items.length}
               </span>
             </NavLink>
           )}
@@ -317,7 +317,7 @@ const Navbar = () => {
           </NavLink>
 
           {/* CART */}
-          {isAuthenticated && item && user?.role !== "admin" && (
+          {isAuthenticated && items.length > 0 && user?.role !== "admin" && (
             <NavLink
               to="/user/cart"
               onClick={() => setOpen(false)}
@@ -325,7 +325,7 @@ const Navbar = () => {
             >
               <span>Cart</span>
               <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white text-xs font-bold text-[#fe7245]">
-                1
+                {items.length}
               </span>
             </NavLink>
           )}
