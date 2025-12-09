@@ -1,40 +1,32 @@
+import React, { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useCart } from "../context/CartContext.jsx";
-import { useState, useEffect, useRef } from "react";
-import logo from "../assets/logo.PNG";
+import { ShoppingBag, Menu, X, ChevronDown, Sparkles } from "lucide-react";
+import logo from "../assets/logo2.PNG";
 
 const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuth();
   const { item } = useCart();
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const profileRef = useRef(null);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
-  };
+  const initial = user?.name?.charAt(0)?.toUpperCase() || user?.email?.charAt(0)?.toUpperCase();
 
-  const initial =
-    user?.name?.charAt(0)?.toUpperCase() ||
-    user?.email?.charAt(0)?.toUpperCase();
-
-  // Handle scroll effect
+  // Scroll effect
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu when clicking outside
+  // Close profile dropdown when clicking outside
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (profileRef.current && !profileRef.current.contains(event.target)) {
+    const handleClickOutside = (e) => {
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
         setProfileOpen(false);
       }
     };
@@ -42,437 +34,210 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // Close mobile menu on route change
-  useEffect(() => {
-    setOpen(false);
-  }, [navigate]);
+  const handleLogout = () => {
+    logout();
+    setMobileOpen(false);
+    navigate("/login");
+  };
+
+  const navLinks = [
+    { to: "/", label: "Home" },
+    { to: "/custom-mobilecase", label: "Phone Cases" },
+    { to: "/pet-center", label: "Pet Gifts" },
+    { to: "/design", label: "Start Design" },
+  ];
 
   return (
-    <nav
-      className={`sticky top-0 z-50 bg-[#0a214f] transition-all duration-300 ${
-        scrolled ? "shadow-lg py-2" : "shadow-md py-3"
-      }`}
-    >
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 lg:px-6">
-        {/* LOGO */}
-        <Link
-          to="/"
-          className="flex items-center gap-2 transition-transform hover:scale-105"
-        >
-          <img
-            src={logo}
-            alt="Logo"
-            className="h-9 w-auto object-contain sm:h-11 md:h-12"
-          />
-        </Link>
+    <>
+      {/* Fixed White Background Navbar */}
+      <nav className={`sticky top-0 z-50  transition-all duration-500 bg-white ${
+        scrolled ? "shadow-lg py-3" : "shadow-md py-5"
+      }`}>
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
 
-        {/* DESKTOP NAV MENUS */}
-        <div className="hidden lg:flex items-center gap-1 xl:gap-2">
-          <NavLink
-            to="/"
-            className={({ isActive }) =>
-              `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                isActive
-                  ? "text-[#fe7245] bg-white/10"
-                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
-              }`
-            }
-          >
-            Home
-          </NavLink>
+          {/* Logo */}
+          <Link to="/" className="flex items-center group">
+            <img
+              src={logo}
+              alt="PetCase"
+              className="h-10 md:h-12 w-auto transition-transform group-hover:scale-110 duration-300"
+            />
+           
+          </Link>
 
-            <NavLink
-            to="/custom-mobilecase"
-            className={({ isActive }) =>
-              `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                isActive
-                  ? "text-[#fe7245] bg-white/10"
-                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
-              }`
-            }
-          >
-            Custom Phone Case
-          </NavLink>
-          <NavLink
-            to="/pet-center"
-            className={({ isActive }) =>
-              `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                isActive
-                  ? "text-[#fe7245] bg-white/10"
-                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
-              }`
-            }
-          >
-            Pet Center
-          </NavLink>
+          {/* Desktop Menu */}
+          <div className="hidden lg:flex items-center gap-2">
 
-          <NavLink
-            to="/design"
-            className={({ isActive }) =>
-              `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                isActive
-                  ? "text-[#fe7245] bg-white/10"
-                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
-              }`
-            }
-          >
-            Design
-          </NavLink>
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) =>
+                  `relative px-5 py-3 text-md font-semibold transition-all duration-300
+                  ${isActive ? "text-[#fe7245]" : "text-gray-800 hover:text-[#fe7245]"}
+                  after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-[#fe7245] after:transition-all hover:after:w-8`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
 
-          {/* CART */}
-          {isAuthenticated && item && user?.role !== "admin" && (
-            <NavLink
-              to="/user/cart"
-              className="relative rounded-full bg-[#fe7245] px-4 py-2 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#ff855f] hover:shadow-lg"
-            >
-              Cart
-              <span className="ml-1.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-[#fe7245]">
-                1
-              </span>
-            </NavLink>
-          )}
+            {/* Cart */}
+            {isAuthenticated && item > 0 && user?.role !== "admin" && (
+              <NavLink
+                to="/user/cart"
+                className="relative ml-6 px-7 py-3 bg-gradient-to-r from-[#fe7245] to-pink-600 text-white rounded-full font-bold shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-3"
+              >
+                <ShoppingBag className="w-5 h-5" />
+                Cart ({item})
+              </NavLink>
+            )}
 
-          {isAuthenticated ? (
-            <>
-              {/* User Panel */}
-              {user?.role !== "admin" && (
-                <NavLink
-                  to="/user/dashboard"
-                  className={({ isActive }) =>
-                    `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                      isActive
-                        ? "text-[#fe7245] bg-white/10"
-                        : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                    }`
-                  }
-                >
-                  User Panel
-                </NavLink>
-              )}
-
-              {/* Admin Panel */}
-              {user?.role === "admin" && (
-                <NavLink
-                  to="/admin/dashboard"
-                  className={({ isActive }) =>
-                    `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                      isActive
-                        ? "text-[#fe7245] bg-white/10"
-                        : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                    }`
-                  }
-                >
-                  Admin Panel
-                </NavLink>
-              )}
-
-              {/* USER PROFILE DROPDOWN */}
-              <div className="relative ml-2" ref={profileRef}>
+            {/* Authenticated User */}
+            {isAuthenticated ? (
+              <div className="relative ml-6" ref={profileRef}>
                 <button
                   onClick={() => setProfileOpen(!profileOpen)}
-                  className="flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 transition-all hover:bg-white/20"
+                  className="flex items-center gap-3 px-5 py-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300"
                 >
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#fe7245] to-[#ff6b3d] text-sm font-bold text-white shadow-md">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#fe7245] to-pink-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">
                     {initial}
                   </div>
-                  <span className="text-sm font-medium text-white max-w-[120px] truncate">
-                    {user?.name || user?.email}
+                  <span className="hidden xl:block font-medium text-gray-800">
+                    Hi, {user?.name?.split(" ")[0] || "User"}
                   </span>
-                  <svg
-                    className={`w-4 h-4 text-white transition-transform ${
-                      profileOpen ? "rotate-180" : ""
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
+                  <ChevronDown className={`w-4 h-4 text-gray-600 transition-transform ${profileOpen ? "rotate-180" : ""}`} />
                 </button>
 
-                {/* DROPDOWN BOX */}
+                {/* Dropdown */}
                 {profileOpen && (
-                  <div className="absolute right-0 mt-2 w-48 rounded-xl bg-white shadow-xl py-2 border border-gray-100">
-                    <div className="px-4 py-2 border-b border-gray-100">
-                      <p className="text-xs font-semibold text-gray-900 truncate">
-                        {user?.name || user?.email}
-                      </p>
-                      <p className="text-xs text-gray-500 truncate">
-                        {user?.email}
-                      </p>
+                  <div className="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+                    <div className="p-5 border-b border-gray-100">
+                      <p className="font-bold text-gray-900">{user?.name || "User"}</p>
+                      <p className="text-sm text-gray-500 truncate">{user?.email}</p>
                     </div>
+                    {user?.role === "admin" ? (
+                      <Link to="/admin/dashboard" className="block px-5 py-4 text-gray-700 hover:bg-gray-50 transition">Admin Panel</Link>
+                    ) : (
+                      <Link to="/user/dashboard" className="block px-5 py-4 text-gray-700 hover:bg-gray-50 transition">My Orders</Link>
+                    )}
                     <button
                       onClick={handleLogout}
-                      className="w-full text-left px-4 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2"
+                      className="w-full text-left px-5 py-4 text-red-600 hover:bg-red-50 font-medium transition"
                     >
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                        />
-                      </svg>
                       Logout
                     </button>
                   </div>
                 )}
               </div>
-            </>
-          ) : (
-            <>
-              <NavLink
-                to="/login"
-                className={({ isActive }) =>
-                  `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                    isActive
-                      ? "text-[#fe7245] bg-white/10"
-                      : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                  }`
-                }
-              >
-                Login
-              </NavLink>
+            ) : (
+              <div className="flex items-center gap-4 ml-6">
+                <Link to="/login" className="text-gray-700 font-semibold hover:text-[#fe7245] transition">
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-8 py-3 bg-gradient-to-r from-[#fe7245] to-pink-600 text-white rounded-full font-bold shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2"
+                >
+                  <Sparkles className="w-5 h-5" />
+                  Sign Up Free
+                </Link>
+              </div>
+            )}
+          </div>
 
-              <NavLink
-                to="/register"
-                className={({ isActive }) =>
-                  `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                    isActive
-                      ? "text-[#fe7245] bg-white/10"
-                      : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                  }`
-                }
-              >
-                Register
-              </NavLink>
-            </>
-          )}
-
-          {/* CONTACT US */}
-          <NavLink
-            to="/contact"
-            className="ml-2 px-5 py-2 text-sm font-semibold rounded-full bg-[#fe7245] text-white shadow-md transition-all hover:bg-[#ff855f] hover:shadow-lg hover:scale-105"
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="lg:hidden p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-all"
           >
-            Contact Us
-          </NavLink>
+            {mobileOpen ? <X className="w-6 h-6 text-gray-800" /> : <Menu className="w-6 h-6 text-gray-800" />}
+          </button>
         </div>
+      </nav>
 
-        {/* MOBILE TOGGLE BUTTON */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="lg:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
-          aria-label="Toggle menu"
-        >
-          {open ? (
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          ) : (
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          )}
-        </button>
-      </div>
+      {/* Mobile Menu — FULLY WORKING */}
+      {mobileOpen && (
+        <div className="fixed inset-0 top-16 z-40 bg-white shadow-2xl pt-8 pb-10 px-6 overflow-y-auto">
+          <div className="space-y-8">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                onClick={() => setMobileOpen(false)}
+                className={({ isActive }) =>
+                  `block text-2xl font-bold py-3 ${isActive ? "text-[#fe7245]" : "text-gray-800"} hover:text-[#fe7245] transition`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
 
-      {/* MOBILE MENU */}
-      <div
-        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          open ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-        }`}
-      >
-        <div className="px-4 pt-4 pb-6 space-y-2 bg-[#0a214f] border-t border-white/10">
-          <NavLink
-            to="/"
-            onClick={() => setOpen(false)}
-            className={({ isActive }) =>
-              `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
-                isActive
-                  ? "text-[#fe7245] bg-white/10"
-                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
-              }`
-            }
-          >
-            Home
-          </NavLink>
-
-          <NavLink
-            to="/design"
-            onClick={() => setOpen(false)}
-            className={({ isActive }) =>
-              `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
-                isActive
-                  ? "text-[#fe7245] bg-white/10"
-                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
-              }`
-            }
-          >
-            Design
-          </NavLink>
-
-          {/* CART */}
-          {isAuthenticated && item && user?.role !== "admin" && (
-            <NavLink
-              to="/user/cart"
-              onClick={() => setOpen(false)}
-              className="flex items-center justify-between px-4 py-3 text-sm font-semibold rounded-lg bg-[#fe7245] text-white transition-all hover:bg-[#ff855f]"
-            >
-              <span>Cart</span>
-              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white text-xs font-bold text-[#fe7245]">
-                1
-              </span>
-            </NavLink>
-          )}
-
-          {isAuthenticated ? (
-            <>
-              {/* User Panel */}
-              {user?.role !== "admin" && (
-                <NavLink
-                  to="/user/dashboard"
-                  onClick={() => setOpen(false)}
-                  className={({ isActive }) =>
-                    `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
-                      isActive
-                        ? "text-[#fe7245] bg-white/10"
-                        : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                    }`
-                  }
-                >
-                  User Panel
-                </NavLink>
-              )}
-
-              {/* Admin Panel */}
-              {user?.role === "admin" && (
-                <NavLink
-                  to="/admin/dashboard"
-                  onClick={() => setOpen(false)}
-                  className={({ isActive }) =>
-                    `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
-                      isActive
-                        ? "text-[#fe7245] bg-white/10"
-                        : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                    }`
-                  }
-                >
-                  Admin Panel
-                </NavLink>
-              )}
-
-              {/* USER PROFILE */}
-              <div className="px-4 py-3 rounded-lg bg-white/5">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#fe7245] to-[#ff6b3d] text-sm font-bold text-white shadow-md">
+            {isAuthenticated ? (
+              <div className="pt-8 border-t border-gray-200">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#fe7245] to-pink-600 flex items-center justify-center text-white text-2xl font-bold shadow-2xl">
                     {initial}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-white truncate">
-                      {user?.name || user?.email}
-                    </p>
-                    <p className="text-xs text-gray-300 truncate">
-                      {user?.email}
-                    </p>
+                  <div>
+                    <p className="font-bold text-xl text-gray-900">{user?.name || "User"}</p>
+                    <p className="text-gray-500">{user?.email}</p>
                   </div>
                 </div>
+
+                {user?.role === "admin" ? (
+                  <Link to="/admin/dashboard" onClick={() => setMobileOpen(false)} className="block py-4 text-lg font-bold text-[#fe7245]">
+                    Admin Panel
+                  </Link>
+                ) : (
+                  <Link to="/user/dashboard" onClick={() => setMobileOpen(false)} className="block py-4 text-lg font-bold text-[#fe7245]">
+                    My Orders
+                  </Link>
+                )}
+
+                {item > 0 && (
+                  <Link to="/user/cart" onClick={() => setMobileOpen(false)} className="block mt-6 py-5 bg-gradient-to-r from-[#fe7245] to-pink-600 text-white rounded-full font-bold text-center shadow-xl">
+                    Cart ({item} items)
+                  </Link>
+                )}
+
                 <button
-                  onClick={() => {
-                    handleLogout();
-                    setOpen(false);
-                  }}
-                  className="w-full px-4 py-2.5 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
+                  onClick={handleLogout}
+                  className="w-full mt-6 py-5 bg-red-600 text-white rounded-full font-bold shadow-xl hover:bg-red-700 transition"
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                    />
-                  </svg>
                   Logout
                 </button>
               </div>
-            </>
-          ) : (
-            <>
-              <NavLink
-                to="/login"
-                onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                  `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
-                    isActive
-                      ? "text-[#fe7245] bg-white/10"
-                      : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                  }`
-                }
-              >
-                Login
-              </NavLink>
-
-              <NavLink
-                to="/register"
-                onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                  `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
-                    isActive
-                      ? "text-[#fe7245] bg-white/10"
-                      : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                  }`
-                }
-              >
-                Register
-              </NavLink>
-            </>
-          )}
-
-          {/* CONTACT US */}
-          <NavLink
-            to="/contact"
-            onClick={() => setOpen(false)}
-            className="block px-4 py-3 text-sm font-semibold rounded-lg bg-[#fe7245] text-white text-center transition-all hover:bg-[#ff855f]"
-          >
-            Contact Us
-          </NavLink>
+            ) : (
+              <div className="pt-8 space-y-6">
+                <Link
+                  to="/login"
+                  onClick={() => setMobileOpen(false)}
+                  className="block text-center py-5 text-2xl font-bold text-gray-800"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={() => setMobileOpen(false)}
+                  className="block text-center py-6 bg-gradient-to-r from-[#fe7245] to-pink-600 text-white rounded-full font-bold text-2xl shadow-2xl hover:scale-105 transition-all duration-300"
+                >
+                  Sign Up Free
+                </Link>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </nav>
+      )}
+
+      {/* Backdrop when mobile menu open */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+    </>
   );
 };
 
