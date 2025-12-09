@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+import cover1 from "../assets/cover1.png";
+import faq1 from "../assets/faq1.jpg";
 
 const FAQ = () => {
   const [openSection, setOpenSection] = useState(null);
   const [openQuestions, setOpenQuestions] = useState(new Set());
   const [isVisible, setIsVisible] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     setIsVisible(true);
@@ -319,13 +322,13 @@ const FAQ = () => {
         <div className="space-y-4">
           {/* iPhone Section */}
           <div className="p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 rounded-lg bg-[#0a214f] flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-black flex items-center justify-center shadow-md">
+                <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M17.05 20.28c-.98.95-2.05.88-3.08.33-1.09-.58-2.21-.96-3.52-.96-1.3 0-2.43.38-3.52.96-1.03.55-2.1.62-3.08.33-1.54-.5-2.84-2.15-2.84-4.25 0-4.29 3.29-9 7.44-9s7.44 4.71 7.44 9c0 2.1-1.3 3.75-2.84 4.25z"/>
                 </svg>
               </div>
-              <h4 className="font-bold text-base text-gray-900">iPhone</h4>
+              <h4 className="font-bold text-lg text-gray-900">iPhone</h4>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
               {phoneModels.iphone.map((model, idx) => (
@@ -339,13 +342,15 @@ const FAQ = () => {
 
           {/* Samsung Section */}
           <div className="p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 rounded-lg bg-[#0a214f] flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57l1.43 1.43L14.86 22l1.43-1.43L17.71 22l2.14-2.14L21.29 18.57l-1.43-1.43z"/>
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-[#1428A0] flex items-center justify-center shadow-md">
+                <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+                  <ellipse cx="12" cy="12" rx="9" ry="9" fill="currentColor"/>
+                  <path d="M8 12c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2s-.9 2-2 2h-4c-1.1 0-2-.9-2-2zm2-1h4v2h-4v-2z" fill="white"/>
+                  <path d="M12 8v8M8 12h8" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
                 </svg>
               </div>
-              <h4 className="font-bold text-base text-gray-900">Samsung</h4>
+              <h4 className="font-bold text-lg text-gray-900">Samsung</h4>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
               {phoneModels.samsung.map((model, idx) => (
@@ -446,237 +451,276 @@ const FAQ = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-6 md:py-8">
-      {/* Animated Header */}
-      <div className={`text-center mb-10 transition-all duration-1000 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"
-      }`}>
-        <div className="inline-block mb-3">
-          <h1 className="text-3xl md:text-4xl font-bold text-[#0a214f]">
-            FAQ
-          </h1>
-        </div>
-        <div className="w-16 h-0.5 bg-gradient-to-r from-transparent via-[#0a214f] to-transparent mx-auto mb-3 animate-pulse"></div>
-        <p className="text-base md:text-lg text-gray-600 font-medium">Frequently Asked Questions</p>
+    <div className="min-h-screen pt-0 pb-6 md:pb-8 relative overflow-hidden" style={{
+      backgroundImage: `
+        radial-gradient(circle at 20% 50%, rgba(10, 33, 79, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(254, 114, 69, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(26, 58, 107, 0.05) 0%, transparent 50%),
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 2px,
+          rgba(10, 33, 79, 0.02) 2px,
+          rgba(10, 33, 79, 0.02) 4px
+        ),
+        linear-gradient(to bottom, #f8fafc, #f1f5f9, #e2e8f0)
+      `,
+      backgroundSize: '100% 100%, 100% 100%, 100% 100%, 20px 20px, 100% 100%',
+      backgroundPosition: '0 0, 0 0, 0 0, 0 0, 0 0',
+    }}>
+      {/* Texture overlay */}
+      <div className="absolute inset-0 opacity-40" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230a214f' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        backgroundSize: '60px 60px',
+      }}></div>
+      
+      {/* Animated gradient orbs */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-96 h-96 bg-[#0a214f]/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-[#fe7245]/8 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-blue-300/6 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
-
-      {/* Shopping Center Section */}
-      <section className={`mb-8 transition-all duration-700 delay-100 ${
-        isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
-      }`}>
-        <button
-          onClick={() => toggleSection("shopping")}
-          className="group w-full text-left bg-gradient-to-r from-[#0a214f] via-[#1a3a6b] to-[#0a214f] bg-[length:200%_auto] text-white p-4 md:p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 flex items-center justify-between relative overflow-hidden transform hover:scale-[1.01]"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-          <div className="relative z-10 flex items-center gap-3">
-            <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
+      <div className="relative z-10">
+        {/* Hero Section */}
+        <div className="relative w-full h-[400px] md:h-[500px] mb-12 overflow-hidden">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url(${cover1})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'blur(2px)',
+          }}></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0a214f]/80 via-[#1a3a6b]/80 to-[#0a214f]/80"></div>
+          <div className="relative z-10 max-w-5xl mx-auto px-4 h-full flex items-center justify-center text-center">
+            <div>
+              <p className={`text-lg md:text-xl italic font-serif text-white/90 mb-4 tracking-wide transition-all duration-700 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+              }`} style={{ transitionDelay: '0ms' }}>
+                Frequently Asked Questions
+              </p>
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-2 leading-tight">
+                <span className={`inline-block text-white transition-all duration-700 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`} style={{ transitionDelay: '200ms' }}>
+                  FIND
+                </span>
+                <br />
+                <span className={`inline-block bg-gradient-to-r from-blue-400 via-purple-500 to-orange-400 bg-clip-text text-transparent transition-all duration-700 ${
+                  isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
+                }`} style={{ transitionDelay: '400ms' }}>
+                  ANSWERS
+                </span>
+              </h1>
+              <p className={`text-base md:text-lg text-white/90 max-w-2xl mx-auto mt-6 leading-relaxed font-light transition-all duration-700 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`} style={{ transitionDelay: '600ms' }}>
+                Find answers to common questions about our vending machines, custom phone cases, and services
+              </p>
             </div>
-            <h2 className="text-lg md:text-xl font-bold">SHOPPING CENTER</h2>
           </div>
-          <svg
-            className={`w-5 h-5 relative z-10 transition-all duration-500 ${openSection === "shopping" ? "rotate-180 scale-110" : "group-hover:scale-110"}`}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-
-        <div className={`overflow-hidden transition-all duration-700 ease-in-out ${
-          openSection === "shopping" ? "max-h-[2000px] opacity-100 mt-4" : "max-h-0 opacity-0 mt-0"
-        }`}>
-          <div className="space-y-4">
-            {/* SA Locations */}
-            <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-lg border-2 border-blue-200 transform transition-all duration-500 hover:shadow-xl animate-fade-in">
-              <div className="flex items-center gap-3 mb-4 pb-3 border-b-2 border-blue-300">
-                <div className="w-10 h-10 rounded-full bg-[#0a214f] flex items-center justify-center shadow-md">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-bold text-[#0a214f]">
-                    Adelaide, SA
-                  </h3>
-                  <p className="text-xs text-gray-600 mt-0.5">{shoppingLocations.sa.length} locations available</p>
-                </div>
-                <span className="px-2.5 py-1 text-xs font-bold text-white bg-[#0a214f] rounded-full border border-blue-300">
-                  SA
-                </span>
-              </div>
-              <div className="grid grid-cols-1 gap-2">
-                {shoppingLocations.sa.map((location, idx) => (
-                  <div 
-                    key={idx} 
-                    className="group/item flex items-start gap-3 p-2.5 bg-white rounded-lg border border-blue-200 hover:border-[#0a214f] hover:shadow-md transition-all duration-300 hover:translate-x-1"
-                    style={{ animationDelay: `${idx * 50}ms` }}
-                  >
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#0a214f] flex items-center justify-center shadow-sm group-hover/item:scale-110 transition-transform">
-                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    </div>
-                    <span className="flex-1 text-sm text-gray-700 group-hover/item:text-[#0a214f] group-hover/item:font-medium transition-all">
-                      {location.replace("📍", "").trim()}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* NSW Locations */}
-            <div className="p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl shadow-lg border-2 border-blue-200 transform transition-all duration-500 hover:shadow-xl animate-fade-in">
-              <div className="flex items-center gap-3 mb-4 pb-3 border-b-2 border-blue-300">
-                <div className="w-10 h-10 rounded-full bg-[#0a214f] flex items-center justify-center shadow-md">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-bold text-[#0a214f]">
-                    Sydney, NSW
-                  </h3>
-                  <p className="text-xs text-gray-600 mt-0.5">{shoppingLocations.nsw.length} locations available</p>
-                </div>
-                <span className="px-2.5 py-1 text-xs font-bold text-white bg-[#0a214f] rounded-full border border-blue-300">
-                  NSW
-                </span>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                {shoppingLocations.nsw.map((location, idx) => (
-                  <div 
-                    key={idx} 
-                    className="group/item flex items-start gap-3 p-2.5 bg-white rounded-lg border border-blue-200 hover:border-[#0a214f] hover:shadow-md transition-all duration-300 hover:translate-x-1"
-                    style={{ animationDelay: `${idx * 30}ms` }}
-                  >
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#0a214f] flex items-center justify-center shadow-sm group-hover/item:scale-110 transition-transform">
-                      <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    </div>
-                    <span className="flex-1 text-sm text-gray-700 group-hover/item:text-[#0a214f] group-hover/item:font-medium transition-all">
-                      {location.replace("📍", "").trim()}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
+          {/* Decorative wave */}
+          <div className="absolute bottom-0 left-0 right-0">
+            <svg className="w-full h-12 text-white" fill="currentColor" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M0,0 C150,80 350,80 600,40 C850,0 1050,0 1200,40 L1200,120 L0,120 Z"></path>
+            </svg>
           </div>
         </div>
-      </section>
 
-      {/* Custom Phone Case Section */}
-      <section className={`transition-all duration-700 delay-200 ${
-        isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
-      }`}>
-        <button
-          onClick={() => toggleSection("phone")}
-          className="group w-full text-left bg-gradient-to-r from-[#0a214f] via-[#1a3a6b] to-[#0a214f] bg-[length:200%_auto] text-white p-4 md:p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-500 flex items-center justify-between relative overflow-hidden transform hover:scale-[1.01]"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-          <div className="relative z-10 flex items-center gap-3">
-            <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center group-hover:rotate-12 transition-transform duration-300">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-              </svg>
-            </div>
-            <h2 className="text-lg md:text-xl font-bold">CUSTOM PHONE CASE</h2>
-          </div>
-          <svg
-            className={`w-5 h-5 relative z-10 transition-all duration-500 ${openSection === "phone" ? "rotate-180 scale-110" : "group-hover:scale-110"}`}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12">
+          {/* Main FAQ Layout - Two Column */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+            {/* Left Side - FAQ Content */}
+            <div className="space-y-6">
+              {/* Title - Glass Card */}
+              <div className={`transition-all duration-700 ease-out ${
+                isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
+              }`} style={{ transitionDelay: '200ms' }}>
+                <div className="relative backdrop-blur-xl bg-white/60 rounded-2xl p-6 border border-white/30 shadow-xl overflow-hidden group hover:bg-white/80 transition-all duration-500">
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#fe7245]/20 to-transparent rounded-bl-full"></div>
+                  <h2 className="relative z-10 text-4xl md:text-5xl font-bold text-[#0a214f] leading-tight">
+                    Frequently
+                    <br />
+                    Asked
+                    <br />
+                    Questions
+                  </h2>
+                </div>
+              </div>
 
-        <div className={`overflow-hidden transition-all duration-700 ease-in-out ${
-          openSection === "phone" ? "max-h-[5000px] opacity-100 mt-4" : "max-h-0 opacity-0 mt-0"
-        }`}>
-          <div className="space-y-3">
-            {faqQuestions.map((item, index) => (
-              <div
-                key={item.id}
-                className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 hover:border-[#0a214f]/50 transition-all duration-300 transform hover:scale-[1.005] hover:shadow-lg"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
+              {/* Search Bar - Glass Card */}
+              <div className={`relative transition-all duration-700 ease-out ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`} style={{ transitionDelay: '300ms' }}>
+                <div className="relative backdrop-blur-xl bg-white/60 rounded-xl border border-white/30 shadow-lg overflow-hidden group hover:bg-white/80 transition-all duration-500">
+                  <input
+                    type="text"
+                    placeholder="Search question here"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full px-4 py-3 pr-12 bg-transparent border-0 rounded-xl focus:outline-none focus:ring-0 transition-all duration-300 text-gray-700 placeholder-gray-400"
+                  />
+                  <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#fe7245] hover:scale-110 transition-all duration-300">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              {/* Shopping Center Section */}
+              <div className={`space-y-3 transition-all duration-700 ease-out ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`} style={{ transitionDelay: '400ms' }}>
                 <button
-                  onClick={() => toggleQuestion(item.id)}
-                  className="w-full text-left p-4 hover:bg-blue-50 transition-all duration-300 flex items-center justify-between group"
+                  onClick={() => toggleSection("shopping")}
+                  className="w-full text-left p-4 backdrop-blur-xl bg-white/60 rounded-xl border border-white/30 hover:bg-white/80 hover:border-[#fe7245] hover:shadow-xl transition-all duration-500 flex items-center justify-between group transform hover:scale-[1.01]"
                 >
-                  <div className="flex items-center gap-3 flex-1">
-                    <div className="w-8 h-8 rounded-lg bg-[#0a214f] flex items-center justify-center text-white font-bold text-xs shadow-sm group-hover:scale-110 transition-transform">
-                      {item.id}
-                    </div>
-                    <span className="text-sm md:text-base font-semibold text-gray-900 group-hover:text-[#0a214f] transition-colors pr-3">
-                      {item.question}
-                    </span>
-                  </div>
-                  <div className="flex-shrink-0">
-                    <div className={`w-8 h-8 rounded-full bg-[#0a214f] flex items-center justify-center transition-all duration-500 ${
-                      openQuestions.has(item.id) ? "rotate-180 scale-110" : "group-hover:scale-110"
-                    }`}>
-                      <svg
-                        className="w-4 h-4 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </div>
-                  </div>
+                  <span className="text-lg font-semibold text-gray-700 group-hover:text-[#fe7245] transition-colors duration-300">Shopping Center Locations?</span>
+                  <svg
+                    className={`w-5 h-5 text-gray-500 transition-all duration-300 group-hover:text-[#fe7245] ${openSection === "shopping" ? "rotate-180 scale-110" : "group-hover:scale-110"}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={openSection === "shopping" ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"} />
+                  </svg>
                 </button>
-                <div className={`overflow-hidden transition-all duration-500 ease-in-out ${
-                  openQuestions.has(item.id) ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+
+                <div className={`overflow-hidden transition-all duration-700 ease-in-out ${
+                  openSection === "shopping" ? "max-h-[2000px] opacity-100 mt-3" : "max-h-0 opacity-0 mt-0"
                 }`}>
-                  <div className="px-4 pb-4 pt-2 text-sm text-gray-700 border-t border-gray-100 bg-gradient-to-b from-white to-gray-50/50">
-                    <div className="animate-fade-in">
-                      {item.answer}
+                  <div className="space-y-4 pl-2">
+                    <div className="space-y-2 text-gray-600">
+                      <p className="font-semibold text-gray-700 mb-2 transition-all duration-500">Adelaide, SA ({shoppingLocations.sa.length} locations):</p>
+                      {shoppingLocations.sa.map((location, idx) => (
+                        <p 
+                          key={idx} 
+                          className="text-sm pl-4 transition-all duration-500"
+                          style={{
+                            opacity: openSection === "shopping" ? 1 : 0,
+                            transform: openSection === "shopping" ? 'translateX(0)' : 'translateX(-10px)',
+                            transitionDelay: `${idx * 50}ms`
+                          }}
+                        >
+                          {location.replace("📍", "").trim()}
+                        </p>
+                      ))}
+                      <p className="font-semibold text-gray-700 mt-4 mb-2 transition-all duration-500">Sydney, NSW ({shoppingLocations.nsw.length} locations):</p>
+                      {shoppingLocations.nsw.map((location, idx) => (
+                        <p 
+                          key={idx} 
+                          className="text-sm pl-4 transition-all duration-500"
+                          style={{
+                            opacity: openSection === "shopping" ? 1 : 0,
+                            transform: openSection === "shopping" ? 'translateX(0)' : 'translateX(-10px)',
+                            transitionDelay: `${(shoppingLocations.sa.length + idx) * 30}ms`
+                          }}
+                        >
+                          {location.replace("📍", "").trim()}
+                        </p>
+                      ))}
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* Chat Online CTA */}
-      <div className={`mt-10 text-center transition-all duration-1000 delay-300 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}>
-        <div className="relative bg-gradient-to-r from-[#0a214f] via-[#1a3a6b] to-[#0a214f] bg-[length:200%_auto] rounded-xl p-6 md:p-8 shadow-xl overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-transparent to-blue-500/10 animate-pulse"></div>
-          <div className="relative z-10">
-            <div className="inline-block mb-3">
-              <svg className="w-10 h-10 text-white animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-              </svg>
+                {/* Custom Phone Case Questions */}
+                <div className={`space-y-3 transition-all duration-700 ease-out ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                }`} style={{ transitionDelay: '500ms' }}>
+                  {faqQuestions
+                    .filter(item => 
+                      searchQuery === "" || 
+                      item.question.toLowerCase().includes(searchQuery.toLowerCase())
+                    )
+                    .map((item, index) => (
+                    <div 
+                      key={item.id} 
+                      className="relative backdrop-blur-xl bg-white/60 rounded-xl border border-white/30 overflow-hidden transition-all duration-500 hover:bg-white/80 hover:shadow-xl hover:border-[#fe7245] transform hover:scale-[1.01] group"
+                      style={{
+                        opacity: isVisible ? 1 : 0,
+                        transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
+                        transitionDelay: `${600 + (index * 100)}ms`
+                      }}
+                    >
+                      {/* Gradient accent */}
+                      <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-[#fe7245]/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                      
+                      <button
+                        onClick={() => toggleQuestion(item.id)}
+                        className="relative z-10 w-full text-left p-4 flex items-center justify-between group/btn hover:bg-white/30 transition-all duration-300"
+                      >
+                        <span className="text-lg font-semibold text-gray-700 group-hover/btn:text-[#fe7245] transition-colors duration-300">{item.question}</span>
+                        <svg
+                          className={`w-5 h-5 text-gray-500 transition-all duration-300 group-hover/btn:text-[#fe7245] ${openQuestions.has(item.id) ? "rotate-180 scale-110" : "group-hover/btn:scale-110"}`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={openQuestions.has(item.id) ? "M5 15l7-7 7 7" : "M19 9l-7 7-7-7"} />
+                        </svg>
+                      </button>
+                      <div className={`overflow-hidden transition-all duration-700 ease-in-out ${
+                        openQuestions.has(item.id) ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+                      }`}>
+                        <div className="px-4 pb-4 pt-2 text-gray-600 border-t border-white/20 transition-all duration-500">
+                          <div className={`transition-all duration-500 ${
+                            openQuestions.has(item.id) ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
+                          }`}>
+                            {item.answer}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-            <h3 className="text-xl md:text-2xl font-bold text-white mb-2">Still have questions?</h3>
-            <p className="text-sm md:text-base text-gray-200 mb-6">Chat with us online for instant support</p>
-            <button className="group/btn relative bg-white text-[#0a214f] font-semibold px-6 py-2.5 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden border-2 border-white">
-              <span className="absolute inset-0 bg-[#0a214f] opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300"></span>
-              <span className="relative z-10 flex items-center gap-2 text-sm group-hover/btn:text-white transition-colors">
-                <span>Chat Online</span>
-                <svg className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </span>
-            </button>
+
+            {/* Right Side - Illustration */}
+            <div className={`lg:sticky lg:top-8 transition-all duration-1000 ease-out ${
+              isVisible ? "opacity-100 translate-x-0 scale-100" : "opacity-0 translate-x-8 scale-95"
+            }`} style={{ transitionDelay: '400ms' }}>
+              <div className="relative group">
+                <div className="backdrop-blur-xl bg-white/40 rounded-2xl p-4 border border-white/30 shadow-2xl overflow-hidden">
+                  <img 
+                    src={faq1} 
+                    alt="FAQ Illustration" 
+                    className="w-full h-auto rounded-xl transition-all duration-500 group-hover:scale-[1.02]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a214f]/5 to-transparent rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Chat Online CTA */}
+          <div className={`mt-12 text-center transition-all duration-1000 delay-300 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}>
+            <div className="relative backdrop-blur-xl bg-gradient-to-br from-white/70 via-white/60 to-white/70 rounded-3xl p-8 md:p-10 shadow-2xl overflow-hidden group border border-white/30 hover:from-white/80 hover:via-white/70 hover:to-white/80 transition-all duration-500">
+              {/* Decorative elements */}
+              <div className="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-[#0a214f]/20 to-transparent rounded-br-full"></div>
+              <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-[#fe7245]/20 to-transparent rounded-tl-full"></div>
+              
+              <div className="relative z-10">
+                <div className="inline-block mb-3">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0a214f] to-[#1a3a6b] flex items-center justify-center shadow-lg mx-auto animate-bounce">
+                    <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                  </div>
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-[#0a214f] mb-2">Still have questions?</h3>
+                <p className="text-sm md:text-base text-gray-700 mb-6">Chat with us online for instant support</p>
+                <button className="group/btn relative bg-[#fe7245] text-white font-semibold px-6 py-2.5 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden border-2 border-[#fe7245] hover:bg-[#ff855f]">
+                  <span className="relative z-10 flex items-center gap-2 text-sm">
+                    <span>Chat Online</span>
+                    <svg className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

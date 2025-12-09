@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import cover1 from "../assets/cover1.png";
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -80,200 +81,318 @@ const About = () => {
   ];
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8 md:py-12">
-      {/* Header */}
-      <div className={`text-center mb-16 transition-all duration-1000 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"
-      }`}>
-        <h1 className="text-3xl md:text-5xl font-bold text-[#0a214f] mb-4">
-          About Alien Snail
-        </h1>
-        <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-[#0a214f] to-transparent mx-auto mb-4 animate-pulse"></div>
-        <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-          Custom Phone Case Printing in Australia
-        </p>
+    <div className="min-h-screen pt-0 pb-6 md:pb-8 relative overflow-hidden" style={{
+      backgroundImage: `
+        radial-gradient(circle at 20% 50%, rgba(10, 33, 79, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(254, 114, 69, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(26, 58, 107, 0.05) 0%, transparent 50%),
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 2px,
+          rgba(10, 33, 79, 0.02) 2px,
+          rgba(10, 33, 79, 0.02) 4px
+        ),
+        linear-gradient(to bottom, #f8fafc, #f1f5f9, #e2e8f0)
+      `,
+      backgroundSize: '100% 100%, 100% 100%, 100% 100%, 20px 20px, 100% 100%',
+      backgroundPosition: '0 0, 0 0, 0 0, 0 0, 0 0',
+    }}>
+      {/* Texture overlay */}
+      <div className="absolute inset-0 opacity-40" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230a214f' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        backgroundSize: '60px 60px',
+      }}></div>
+      
+      {/* Animated gradient orbs */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-96 h-96 bg-[#0a214f]/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-[#fe7245]/8 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-blue-300/6 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
       </div>
 
-      {/* Welcome Section */}
-      <div className={`mb-16 transition-all duration-1000 delay-100 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}>
-        <div className="bg-blue-50 rounded-xl p-8 md:p-10 border-2 border-blue-200 shadow-lg">
-          <p className="text-lg md:text-xl text-gray-800 leading-relaxed text-center">
-            Welcome to Alien Snail, Australia's proudly homegrown leader in custom phone case vending machines and personalised product solutions. Born right here in Australia, we're passionate about helping you capture and preserve your most cherished moments through innovative, high-quality, and fully customised products.
-          </p>
-        </div>
-      </div>
-
-      {/* Our Story Section */}
-      <section className={`mb-16 transition-all duration-700 delay-200 ${
-        isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
-      }`}>
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-12 h-12 rounded-full bg-[#0a214f] flex items-center justify-center shadow-lg">
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-            </svg>
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0a214f]">Our Story</h2>
-        </div>
-        <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-200 space-y-4">
-          <p className="text-gray-700 leading-relaxed">
-            At Alien Snail, we believe that every memory deserves to be celebrated. From our state-of-the-art custom phone case vending machines located in the heart of Adelaide and Sydney to our exciting new range of online personalised products, we're dedicated to making self-expression effortless and meaningful. As a local Australian company, we take pride in understanding what Aussies love—unique, high-quality products that reflect individuality and creativity.
-          </p>
-          <p className="text-gray-700 leading-relaxed">
-            Our journey began with our revolutionary vending machines, allowing customers to create vibrant, durable phone cases using any photo from their camera roll in just 4-5 minutes. Now, we've expanded our vision to offer an even wider range of customisable products online, giving you endless ways to turn your favourite moments into keepsakes or thoughtful gifts.
-          </p>
-        </div>
-      </section>
-
-      {/* What We Do Section */}
-      <section className={`mb-16 transition-all duration-700 delay-300 ${
-        isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
-      }`}>
-        <div className="flex items-center gap-4 mb-8">
-          <div className="w-12 h-12 rounded-full bg-[#0a214f] flex items-center justify-center shadow-lg">
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-            </svg>
-          </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0a214f]">What We Do</h2>
-        </div>
-        <div className="grid md:grid-cols-3 gap-6">
-          {whatWeDo.map((item, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl hover:scale-[1.02] transition-all duration-300 transform group"
-              style={{ animationDelay: `${(index + 1) * 100}ms` }}
-            >
-              <div className="w-16 h-16 rounded-full bg-[#0a214f] flex items-center justify-center mb-4 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300 shadow-md">
-                <div className="text-white">
-                  {item.icon}
+      <div className="relative z-10">
+        {/* Hero Section */}
+        <div className="relative w-full h-[400px] md:h-[500px] mb-12 overflow-hidden">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url(${cover1})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'blur(2px)',
+          }}></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0a214f]/80 via-[#1a3a6b]/80 to-[#0a214f]/80"></div>
+          <div className="relative z-10 max-w-6xl mx-auto px-4 h-full flex items-center justify-center text-center">
+            <div>
+              <p className={`text-lg md:text-xl italic font-serif text-white/90 mb-4 tracking-wide transition-all duration-700 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+              }`} style={{ transitionDelay: '0ms' }}>
+                Custom Phone Case Specialists
+              </p>
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-2 leading-tight">
+                <span className={`inline-block text-white transition-all duration-700 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`} style={{ transitionDelay: '200ms' }}>
+                  ABOUT
+                </span>
+                <br />
+                <span className={`inline-block bg-gradient-to-r from-blue-400 via-purple-500 to-orange-400 bg-clip-text text-transparent transition-all duration-700 ${
+                  isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-8 scale-95"
+                }`} style={{ transitionDelay: '400ms' }}>
+                  ALIEN SNAIL
+                </span>
+              </h1>
+              <p className={`text-base md:text-lg text-white/90 max-w-3xl mx-auto mt-6 leading-relaxed font-light transition-all duration-700 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`} style={{ transitionDelay: '600ms' }}>
+                Australia's Proudly Homegrown Leader in Custom Phone Case Vending Machines & Personalized Product Solutions
+              </p>
+              <div className={`flex items-center justify-center gap-4 transition-all duration-700 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              }`} style={{ transitionDelay: '800ms' }}>
+                <div className="px-6 py-3 bg-white/10 backdrop-blur-md rounded-lg border-2 border-white/20 text-white font-semibold hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                  Made in Australia
                 </div>
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#0a214f] transition-colors">
-                {item.title}
-              </h3>
-              <p className="text-gray-700 mb-3 leading-relaxed">
-                {item.description}
-              </p>
-              <p className="text-sm text-gray-600 italic">
-                {item.details}
-              </p>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Why Choose SnapShell Section */}
-      <section className={`mb-16 transition-all duration-700 delay-400 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}>
-        <div className="flex items-center gap-4 mb-8">
-          <div className="w-12 h-12 rounded-full bg-[#0a214f] flex items-center justify-center shadow-lg">
-            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </div>
+          {/* Decorative wave */}
+          <div className="absolute bottom-0 left-0 right-0">
+            <svg className="w-full h-12 text-white" fill="currentColor" viewBox="0 0 1200 120" preserveAspectRatio="none">
+              <path d="M0,0 C150,80 350,80 600,40 C850,0 1050,0 1200,40 L1200,120 L0,120 Z"></path>
             </svg>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-[#0a214f]">Why Choose Alien Snail?</h2>
         </div>
-        <div className="grid md:grid-cols-2 gap-6">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl hover:scale-[1.01] transition-all duration-300 transform group"
-              style={{ animationDelay: `${(index + 1) * 100}ms` }}
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center flex-shrink-0 group-hover:bg-[#0a214f] transition-colors">
-                  <div className="text-[#0a214f] group-hover:text-white transition-colors">
-                    {feature.icon}
+
+        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12">
+          {/* Welcome Section - Glass Card */}
+          <div className={`mb-16 transition-all duration-1000 delay-100 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}>
+            <div className="relative backdrop-blur-xl bg-white/70 rounded-3xl p-8 md:p-12 border border-white/20 shadow-2xl overflow-hidden group hover:bg-white/80 transition-all duration-500">
+              {/* Glass effect gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-transparent to-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              {/* Decorative corner accent */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#fe7245]/20 to-transparent rounded-bl-full"></div>
+              <div className="relative z-10">
+                <p className="text-lg md:text-xl text-gray-800 leading-relaxed text-center font-medium">
+                  Welcome to Alien Snail, Australia's proudly homegrown leader in custom phone case vending machines and personalised product solutions. Born right here in Australia, we're passionate about helping you capture and preserve your most cherished moments through innovative, high-quality, and fully customised products.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Our Story Section - Glass Card with Split Layout */}
+          <section className={`mb-16 transition-all duration-700 delay-200 ${
+            isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+          }`}>
+            <div className="grid md:grid-cols-12 gap-6 items-start">
+              {/* Icon Header */}
+              <div className="md:col-span-3">
+                <div className="sticky top-8">
+                  <div className="backdrop-blur-xl bg-white/60 rounded-2xl p-6 border border-white/30 shadow-xl flex items-center justify-center md:flex-col gap-4">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0a214f] to-[#1a3a6b] flex items-center justify-center shadow-lg">
+                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                    </div>
+                    <h2 className="text-2xl md:text-3xl font-bold text-[#0a214f] text-center md:text-left">Our Story</h2>
                   </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-[#0a214f] transition-colors">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    {feature.description}
+              </div>
+              
+              {/* Content */}
+              <div className="md:col-span-9">
+                <div className="backdrop-blur-xl bg-white/60 rounded-2xl p-6 md:p-8 border border-white/30 shadow-xl space-y-6 hover:bg-white/70 transition-all duration-500">
+                  <p className="text-gray-700 leading-relaxed text-lg">
+                    At Alien Snail, we believe that every memory deserves to be celebrated. From our state-of-the-art custom phone case vending machines located in the heart of Adelaide and Sydney to our exciting new range of online personalised products, we're dedicated to making self-expression effortless and meaningful.
+                  </p>
+                  <p className="text-gray-700 leading-relaxed text-lg">
+                    Our journey began with our revolutionary vending machines, allowing customers to create vibrant, durable phone cases using any photo from their camera roll in just 4-5 minutes. Now, we've expanded our vision to offer an even wider range of customisable products online, giving you endless ways to turn your favourite moments into keepsakes or thoughtful gifts.
                   </p>
                 </div>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
+          </section>
 
-      {/* Our Mission Section */}
-      <section className={`mb-16 transition-all duration-700 delay-500 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}>
-        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-8 md:p-10 border-2 border-blue-200 shadow-lg">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-12 h-12 rounded-full bg-[#0a214f] flex items-center justify-center shadow-lg">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
+          {/* What We Do Section - Glass Cards Grid */}
+          <section className={`mb-16 transition-all duration-700 delay-300 ${
+            isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+          }`}>
+            <div className="mb-8">
+              <div className="inline-flex items-center gap-4 backdrop-blur-xl bg-white/60 rounded-2xl px-6 py-4 border border-white/30 shadow-xl">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0a214f] to-[#1a3a6b] flex items-center justify-center shadow-lg">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                  </svg>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold text-[#0a214f]">What We Do</h2>
+              </div>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0a214f]">Our Mission</h2>
-          </div>
-          <p className="text-lg text-gray-800 leading-relaxed">
-            At Alien Snail, our mission is simple: to empower you to express your individuality and preserve your memories in any moment you choose. Whether you're visiting one of our vending machines or exploring our online customisation options, we're here to make every experience fun, fast, and unforgettable.
-          </p>
-        </div>
-      </section>
+            <div className="grid md:grid-cols-3 gap-6">
+              {whatWeDo.map((item, index) => (
+                <div
+                  key={index}
+                  className="relative backdrop-blur-xl bg-white/60 rounded-2xl p-6 md:p-8 border border-white/30 shadow-xl hover:bg-white/80 hover:shadow-2xl hover:scale-[1.02] transition-all duration-500 transform group overflow-hidden"
+                  style={{ animationDelay: `${(index + 1) * 100}ms` }}
+                >
+                  {/* Gradient accent on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-[#fe7245]/10 via-transparent to-[#0a214f]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  <div className="relative z-10">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0a214f] to-[#1a3a6b] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg">
+                      <div className="text-white">
+                        {item.icon}
+                      </div>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-[#0a214f] transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-700 mb-4 leading-relaxed">
+                      {item.description}
+                    </p>
+                    <div className="pt-4 border-t border-gray-200/50">
+                      <p className="text-sm text-gray-600 italic font-medium">
+                        {item.details}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
 
-      {/* Join the Community Section */}
-      <section className={`transition-all duration-700 delay-600 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}>
-        <div className="bg-white rounded-xl shadow-lg p-8 md:p-10 border-2 border-blue-200">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0a214f] mb-4">
-              Join the Alien Snail Community
-            </h2>
-            <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
-              We're more than just a brand we're a community of Aussies who love to celebrate life's moments, big and small. Follow us on Instagram and TikTok to see how our customers are creating their own Alien Snail stories, and visit our website to start designing your personalised products today.
-            </p>
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-4 mb-6">
-            <button
-              className="flex items-center gap-2 px-6 py-3 bg-blue-50 rounded-lg border-2 border-blue-200 hover:border-[#0a214f] hover:bg-[#0a214f] hover:text-white transition-all duration-300 transform hover:scale-105 group"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z" />
-              </svg>
-              <span className="font-semibold">Instagram</span>
-            </button>
-            <button
-              className="flex items-center gap-2 px-6 py-3 bg-blue-50 rounded-lg border-2 border-blue-200 hover:border-[#0a214f] hover:bg-[#0a214f] hover:text-white transition-all duration-300 transform hover:scale-105 group"
-            >
-              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
-              </svg>
-              <span className="font-semibold">TikTok</span>
-            </button>
-            <button
-              className="flex items-center gap-2 px-6 py-3 bg-[#0a214f] text-white rounded-lg border-2 border-[#0a214f] hover:bg-white hover:text-[#0a214f] transition-all duration-300 transform hover:scale-105 group"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-              </svg>
-              <span className="font-semibold">Visit Website</span>
-            </button>
-          </div>
+          {/* Why Choose Alien Snail Section - Glass Cards */}
+          <section className={`mb-16 transition-all duration-700 delay-400 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}>
+            <div className="mb-8">
+              <div className="inline-flex items-center gap-4 backdrop-blur-xl bg-white/60 rounded-2xl px-6 py-4 border border-white/30 shadow-xl">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0a214f] to-[#1a3a6b] flex items-center justify-center shadow-lg">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold text-[#0a214f]">Why Choose Alien Snail?</h2>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-2 gap-6">
+              {features.map((feature, index) => (
+                <div
+                  key={index}
+                  className="relative backdrop-blur-xl bg-white/60 rounded-2xl p-6 border border-white/30 shadow-xl hover:bg-white/80 hover:shadow-2xl hover:scale-[1.01] transition-all duration-500 transform group overflow-hidden"
+                  style={{ animationDelay: `${(index + 1) * 100}ms` }}
+                >
+                  {/* Gradient accent */}
+                  <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#fe7245]/20 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  <div className="relative z-10 flex items-start gap-4">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-white/80 to-white/40 backdrop-blur-sm flex items-center justify-center flex-shrink-0 group-hover:bg-gradient-to-br group-hover:from-[#0a214f] group-hover:to-[#1a3a6b] transition-all duration-500 shadow-md border border-white/50">
+                      <div className="text-[#0a214f] group-hover:text-white transition-colors duration-500">
+                        {feature.icon}
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-[#0a214f] transition-colors">
+                        {feature.title}
+                      </h3>
+                      <p className="text-gray-700 leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
 
-          <div className="text-center pt-6 border-t border-gray-200">
-            <p className="text-lg text-gray-800 font-medium">
-              Thank you for choosing Alien Snail, where your memories become extraordinary.
-            </p>
-          </div>
+          {/* Our Mission Section - Large Glass Card */}
+          <section className={`mb-16 transition-all duration-700 delay-500 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}>
+            <div className="relative backdrop-blur-xl bg-gradient-to-br from-white/70 via-white/60 to-white/70 rounded-3xl p-8 md:p-12 border border-white/30 shadow-2xl overflow-hidden group hover:from-white/80 hover:via-white/70 hover:to-white/80 transition-all duration-500">
+              {/* Animated gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#fe7245]/10 via-transparent to-[#0a214f]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              {/* Decorative elements */}
+              <div className="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-[#0a214f]/20 to-transparent rounded-br-full"></div>
+              <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-[#fe7245]/20 to-transparent rounded-tl-full"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0a214f] to-[#1a3a6b] flex items-center justify-center shadow-lg">
+                    <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-[#0a214f]">Our Mission</h2>
+                </div>
+                <p className="text-lg text-gray-800 leading-relaxed max-w-4xl">
+                  At Alien Snail, our mission is simple: to empower you to express your individuality and preserve your memories in any moment you choose. Whether you're visiting one of our vending machines or exploring our online customisation options, we're here to make every experience fun, fast, and unforgettable.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Join the Community Section - Glass Card */}
+          <section className={`transition-all duration-700 delay-600 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}>
+            <div className="relative backdrop-blur-xl bg-white/60 rounded-3xl p-8 md:p-12 border border-white/30 shadow-2xl overflow-hidden group hover:bg-white/80 transition-all duration-500">
+              {/* Gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#0a214f]/5 via-transparent to-[#fe7245]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative z-10">
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl md:text-4xl font-bold text-[#0a214f] mb-4">
+                    Join the Alien Snail Community
+                  </h2>
+                  <p className="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+                    We're more than just a brand we're a community of Aussies who love to celebrate life's moments, big and small. Follow us on Instagram and TikTok to see how our customers are creating their own Alien Snail stories, and visit our website to start designing your personalised products today.
+                  </p>
+                </div>
+                
+                <div className="flex flex-wrap justify-center gap-4 mb-8">
+                  <button className="relative backdrop-blur-md bg-white/80 rounded-xl px-6 py-3 border-2 border-white/40 hover:border-[#fe7245] hover:bg-[#fe7245] hover:text-white transition-all duration-300 transform hover:scale-105 group shadow-lg overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                    <div className="relative z-10 flex items-center gap-2">
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z" />
+                      </svg>
+                      <span className="font-semibold">Instagram</span>
+                    </div>
+                  </button>
+                  <button className="relative backdrop-blur-md bg-white/80 rounded-xl px-6 py-3 border-2 border-white/40 hover:border-[#fe7245] hover:bg-[#fe7245] hover:text-white transition-all duration-300 transform hover:scale-105 group shadow-lg overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                    <div className="relative z-10 flex items-center gap-2">
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z"/>
+                      </svg>
+                      <span className="font-semibold">TikTok</span>
+                    </div>
+                  </button>
+                  <button className="relative backdrop-blur-md bg-[#fe7245] text-white rounded-xl px-6 py-3 border-2 border-[#fe7245] hover:bg-[#ff855f] hover:border-[#ff855f] transition-all duration-300 transform hover:scale-105 group shadow-lg overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                    <div className="relative z-10 flex items-center gap-2">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                      </svg>
+                      <span className="font-semibold">Visit Website</span>
+                    </div>
+                  </button>
+                </div>
+
+                <div className="text-center pt-6 border-t border-gray-200/50">
+                  <p className="text-lg text-gray-800 font-medium">
+                    Thank you for choosing Alien Snail, where your memories become extraordinary.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
-      </section>
+      </div>
     </div>
   );
 };
 
 export default About;
-
