@@ -494,7 +494,7 @@ const FAQ = () => {
 
       <div className="relative z-10">
         {/* Hero Section */}
-        <div className="relative w-full h-[400px] md:h-[500px] mb-16 overflow-hidden">
+        <div className="relative w-full h-[350px] sm:h-[400px] md:h-[500px] mb-8 sm:mb-12 md:mb-16 overflow-hidden">
           <div className="absolute inset-0" style={{
             backgroundImage: `url(${cover1})`,
             backgroundSize: 'cover',
@@ -502,14 +502,14 @@ const FAQ = () => {
             filter: 'blur(2px)',
           }}></div>
           <div className="absolute inset-0 bg-gradient-to-br from-[#0a214f]/80 via-[#1a3a6b]/80 to-[#0a214f]/80"></div>
-          <div className="relative z-10 max-w-7xl mx-auto px-4 h-full flex items-center justify-center text-center">
-            <div>
-              <p className={`text-lg md:text-xl italic font-serif text-white/90 mb-4 tracking-wide transition-all duration-700 ${
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 h-full flex items-center justify-center text-center">
+            <div className="w-full">
+              <p className={`text-sm sm:text-base md:text-lg lg:text-xl italic font-serif text-white/90 mb-3 sm:mb-4 tracking-wide transition-all duration-700 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
               }`} style={{ transitionDelay: '0ms' }}>
                 Frequently Asked Questions
               </p>
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-2 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold mb-2 leading-tight px-2">
                 <span className={`inline-block text-white transition-all duration-700 ${
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
                 }`} style={{ transitionDelay: '200ms' }}>
@@ -522,7 +522,7 @@ const FAQ = () => {
                   ANSWERS
                 </span>
               </h1>
-              <p className={`text-base md:text-lg text-white/90 max-w-2xl mx-auto mt-6 leading-relaxed font-light transition-all duration-700 ${
+              <p className={`text-xs sm:text-sm md:text-base lg:text-lg text-white/90 max-w-2xl mx-auto mt-4 sm:mt-6 leading-relaxed font-light transition-all duration-700 px-4 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
               }`} style={{ transitionDelay: '600ms' }}>
                 Get instant answers to your questions about our services and products
@@ -537,37 +537,37 @@ const FAQ = () => {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-6 lg:px-8 py-6 sm:py-8 md:py-12">
           {/* FAQ Image Section */}
-          <div className={`mb-12 transition-all duration-1000 ease-out ${
+          <div className={`mb-8 sm:mb-12 transition-all duration-1000 ease-out ${
             isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-10 scale-95"
           }`} style={{ transitionDelay: '200ms' }}>
             <div className="relative group">
-              <div className="backdrop-blur-xl bg-white/60 rounded-3xl p-6 border border-white/30 shadow-2xl overflow-hidden">
+              <div className="backdrop-blur-xl bg-white/60 rounded-2xl sm:rounded-3xl p-3 sm:p-4 md:p-6 border border-white/30 shadow-2xl overflow-hidden">
                 <img 
                   src={faq1} 
                   alt="FAQ Illustration" 
-                  className="w-full h-auto rounded-2xl transition-transform duration-700 group-hover:scale-[1.02]"
+                  className="w-full h-auto rounded-xl sm:rounded-2xl transition-transform duration-700 group-hover:scale-[1.02]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a214f]/5 via-transparent to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a214f]/5 via-transparent to-transparent rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
             </div>
           </div>
 
           {/* Search Bar */}
-          <div className={`mb-8 transition-all duration-700 ease-out ${
+          <div className={`mb-6 sm:mb-8 transition-all duration-700 ease-out ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`} style={{ transitionDelay: '300ms' }}>
-            <div className="relative backdrop-blur-xl bg-white/60 rounded-2xl border border-white/30 shadow-xl overflow-hidden group hover:bg-white/80 transition-all duration-500">
+            <div className="relative backdrop-blur-xl bg-white/60 rounded-xl sm:rounded-2xl border border-white/30 shadow-xl overflow-hidden group hover:bg-white/80 transition-all duration-500">
               <input
                 type="text"
                 placeholder="Search questions here..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-6 py-4 pr-14 bg-transparent border-0 rounded-2xl focus:outline-none focus:ring-0 transition-all duration-300 text-gray-700 placeholder-gray-400 text-lg"
+                className="w-full px-4 sm:px-6 py-3 sm:py-4 pr-10 sm:pr-14 bg-transparent border-0 rounded-xl sm:rounded-2xl focus:outline-none focus:ring-0 transition-all duration-300 text-sm sm:text-base md:text-lg text-gray-700 placeholder-gray-400"
               />
-              <button className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#fe7245] hover:scale-110 transition-all duration-300">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <button className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-[#fe7245] hover:scale-110 transition-all duration-300">
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </button>
@@ -575,24 +575,24 @@ const FAQ = () => {
           </div>
 
           {/* Shopping Locations Section */}
-          <div className={`mb-12 transition-all duration-700 ease-out ${
+          <div className={`mb-8 sm:mb-12 transition-all duration-700 ease-out ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`} style={{ transitionDelay: '400ms' }}>
             {/* Header */}
-            <div className="mb-8">
-              <div className="flex items-center gap-4 mb-2">
-                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0a214f] to-[#1a3a6b] flex items-center justify-center shadow-lg">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="mb-6 sm:mb-8">
+              <div className="flex items-center gap-2 sm:gap-4 mb-2">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-[#0a214f] to-[#1a3a6b] flex items-center justify-center shadow-lg">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-[#0a214f]">Shopping Center Locations</h2>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0a214f]">Shopping Center Locations</h2>
               </div>
-              <div className="flex items-center gap-4 mt-4">
-                <div className="flex items-center gap-2 px-4 py-2 bg-white/60 rounded-lg border border-white/30 backdrop-blur-sm">
-                  <div className="w-3 h-3 rounded-full bg-[#0a214f]"></div>
-                  <span className="text-sm font-semibold text-gray-700">
+              <div className="flex items-center gap-3 sm:gap-4 mt-3 sm:mt-4">
+                <div className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-white/60 rounded-lg border border-white/30 backdrop-blur-sm">
+                  <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-[#0a214f]"></div>
+                  <span className="text-xs sm:text-sm font-semibold text-gray-700">
                     {shoppingLocations.sa.length + shoppingLocations.nsw.length} Total Locations
                   </span>
                 </div>
@@ -600,31 +600,31 @@ const FAQ = () => {
             </div>
 
             {/* State Cards */}
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               {/* Adelaide Card */}
-              <div className="relative backdrop-blur-xl bg-white/60 rounded-2xl p-6 border border-white/30 shadow-xl overflow-hidden group hover:bg-white/80 hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02]">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#0a214f]/10 to-transparent rounded-bl-full"></div>
+              <div className="relative backdrop-blur-xl bg-white/60 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/30 shadow-xl overflow-hidden group hover:bg-white/80 hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02]">
+                <div className="absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-[#0a214f]/10 to-transparent rounded-bl-full"></div>
                 <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0a214f] to-[#1a3a6b] flex items-center justify-center shadow-md">
-                        <span className="text-white font-bold text-lg">SA</span>
+                  <div className="flex items-center justify-between mb-4 sm:mb-6">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-[#0a214f] to-[#1a3a6b] flex items-center justify-center shadow-md">
+                        <span className="text-white font-bold text-base sm:text-lg">SA</span>
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900">Adelaide</h3>
-                        <p className="text-sm text-gray-600">{shoppingLocations.sa.length} locations</p>
+                        <h3 className="text-lg sm:text-xl font-bold text-gray-900">Adelaide</h3>
+                        <p className="text-xs sm:text-sm text-gray-600">{shoppingLocations.sa.length} locations</p>
                       </div>
                     </div>
                   </div>
                   <div className="space-y-2">
                     {shoppingLocations.sa.map((location, idx) => (
-                      <div key={idx} className="flex items-start gap-3 p-3 bg-white/40 rounded-lg border border-white/30 hover:bg-white/60 hover:border-[#0a214f]/20 transition-all duration-300 group/item">
-                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-[#0a214f]/20 flex items-center justify-center mt-0.5 group-hover/item:bg-[#0a214f] transition-colors duration-300">
-                          <svg className="w-3 h-3 text-[#0a214f] group-hover/item:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 20 20">
+                      <div key={idx} className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 bg-white/40 rounded-lg border border-white/30 hover:bg-white/60 hover:border-[#0a214f]/20 transition-all duration-300 group/item">
+                        <div className="flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#0a214f]/20 flex items-center justify-center mt-0.5 group-hover/item:bg-[#0a214f] transition-colors duration-300">
+                          <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#0a214f] group-hover/item:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                           </svg>
                         </div>
-                        <p className="text-sm text-gray-700 leading-relaxed flex-1">{location.replace("📍", "").trim()}</p>
+                        <p className="text-xs sm:text-sm text-gray-700 leading-relaxed flex-1">{location.replace("📍", "").trim()}</p>
                       </div>
                     ))}
                   </div>
@@ -632,29 +632,29 @@ const FAQ = () => {
               </div>
 
               {/* Sydney Card */}
-              <div className="relative backdrop-blur-xl bg-white/60 rounded-2xl p-6 border border-white/30 shadow-xl overflow-hidden group hover:bg-white/80 hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02]">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#fe7245]/10 to-transparent rounded-bl-full"></div>
+              <div className="relative backdrop-blur-xl bg-white/60 rounded-xl sm:rounded-2xl p-4 sm:p-6 border border-white/30 shadow-xl overflow-hidden group hover:bg-white/80 hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02]">
+                <div className="absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-[#fe7245]/10 to-transparent rounded-bl-full"></div>
                 <div className="relative z-10">
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#fe7245] to-[#ff855f] flex items-center justify-center shadow-md">
-                        <span className="text-white font-bold text-lg">NSW</span>
+                  <div className="flex items-center justify-between mb-4 sm:mb-6">
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-gradient-to-br from-[#fe7245] to-[#ff855f] flex items-center justify-center shadow-md">
+                        <span className="text-white font-bold text-base sm:text-lg">NSW</span>
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900">Sydney</h3>
-                        <p className="text-sm text-gray-600">{shoppingLocations.nsw.length} locations</p>
+                        <h3 className="text-lg sm:text-xl font-bold text-gray-900">Sydney</h3>
+                        <p className="text-xs sm:text-sm text-gray-600">{shoppingLocations.nsw.length} locations</p>
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-2 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                  <div className="space-y-2 max-h-[400px] sm:max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
                     {shoppingLocations.nsw.map((location, idx) => (
-                      <div key={idx} className="flex items-start gap-3 p-3 bg-white/40 rounded-lg border border-white/30 hover:bg-white/60 hover:border-[#fe7245]/20 transition-all duration-300 group/item">
-                        <div className="flex-shrink-0 w-5 h-5 rounded-full bg-[#fe7245]/20 flex items-center justify-center mt-0.5 group-hover/item:bg-[#fe7245] transition-colors duration-300">
-                          <svg className="w-3 h-3 text-[#fe7245] group-hover/item:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 20 20">
+                      <div key={idx} className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 bg-white/40 rounded-lg border border-white/30 hover:bg-white/60 hover:border-[#fe7245]/20 transition-all duration-300 group/item">
+                        <div className="flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#fe7245]/20 flex items-center justify-center mt-0.5 group-hover/item:bg-[#fe7245] transition-colors duration-300">
+                          <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-[#fe7245] group-hover/item:text-white transition-colors duration-300" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                           </svg>
                         </div>
-                        <p className="text-sm text-gray-700 leading-relaxed flex-1">{location.replace("📍", "").trim()}</p>
+                        <p className="text-xs sm:text-sm text-gray-700 leading-relaxed flex-1">{location.replace("📍", "").trim()}</p>
                       </div>
                     ))}
                   </div>
@@ -664,14 +664,14 @@ const FAQ = () => {
           </div>
 
           {/* FAQ Questions */}
-          <div className={`space-y-4 transition-all duration-700 ease-out ${
+          <div className={`space-y-3 sm:space-y-4 transition-all duration-700 ease-out ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`} style={{ transitionDelay: '500ms' }}>
-            <h2 className="text-3xl md:text-4xl font-bold text-[#0a214f] mb-6">Common Questions</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0a214f] mb-4 sm:mb-6">Common Questions</h2>
             {filteredQuestions.map((item, index) => (
               <div 
                 key={item.id} 
-                className="relative backdrop-blur-xl bg-white/60 rounded-2xl border border-white/30 overflow-hidden transition-all duration-500 hover:bg-white/80 hover:shadow-xl hover:border-[#fe7245] transform hover:scale-[1.01] group"
+                className="relative backdrop-blur-xl bg-white/60 rounded-xl sm:rounded-2xl border border-white/30 overflow-hidden transition-all duration-500 hover:bg-white/80 hover:shadow-xl hover:border-[#fe7245] transform hover:scale-[1.01] group"
                 style={{
                   opacity: isVisible ? 1 : 0,
                   transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
@@ -679,15 +679,15 @@ const FAQ = () => {
                 }}
               >
                 {/* Gradient accent */}
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#fe7245]/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-[#fe7245]/10 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 
                 <button
                   onClick={() => toggleQuestion(item.id)}
-                  className="relative z-10 w-full text-left p-6 flex items-center justify-between group/btn hover:bg-white/30 transition-all duration-300"
+                  className="relative z-10 w-full text-left p-4 sm:p-6 flex items-center justify-between group/btn hover:bg-white/30 transition-all duration-300"
                 >
-                  <span className="text-lg md:text-xl font-semibold text-gray-700 group-hover/btn:text-[#fe7245] transition-colors duration-300 pr-4">{item.question}</span>
+                  <span className="text-base sm:text-lg md:text-xl font-semibold text-gray-700 group-hover/btn:text-[#fe7245] transition-colors duration-300 pr-3 sm:pr-4">{item.question}</span>
                   <svg
-                    className={`flex-shrink-0 w-6 h-6 text-gray-500 transition-all duration-300 group-hover/btn:text-[#fe7245] ${openQuestion === item.id ? "rotate-180 scale-110" : "group-hover/btn:scale-110"}`}
+                    className={`flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 text-gray-500 transition-all duration-300 group-hover/btn:text-[#fe7245] ${openQuestion === item.id ? "rotate-180 scale-110" : "group-hover/btn:scale-110"}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -698,7 +698,7 @@ const FAQ = () => {
                 <div className={`overflow-hidden transition-all duration-700 ease-in-out ${
                   openQuestion === item.id ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
                 }`}>
-                  <div className="px-6 pb-6 pt-2 text-gray-600 border-t border-white/20 transition-all duration-500">
+                  <div className="px-4 sm:px-6 pb-4 sm:pb-6 pt-2 text-gray-600 border-t border-white/20 transition-all duration-500">
                     <div className={`transition-all duration-500 ${
                       openQuestion === item.id ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
                     }`}>
@@ -711,28 +711,28 @@ const FAQ = () => {
           </div>
 
           {/* Chat Online CTA */}
-          <div className={`mt-16 text-center transition-all duration-1000 delay-300 ${
+          <div className={`mt-8 sm:mt-12 md:mt-16 text-center transition-all duration-1000 delay-300 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}>
-            <div className="relative backdrop-blur-xl bg-gradient-to-br from-white/70 via-white/60 to-white/70 rounded-3xl p-8 md:p-10 shadow-2xl overflow-hidden group border border-white/30 hover:from-white/80 hover:via-white/70 hover:to-white/80 transition-all duration-500">
+            <div className="relative backdrop-blur-xl bg-gradient-to-br from-white/70 via-white/60 to-white/70 rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 shadow-2xl overflow-hidden group border border-white/30 hover:from-white/80 hover:via-white/70 hover:to-white/80 transition-all duration-500">
               {/* Decorative elements */}
-              <div className="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-[#0a214f]/20 to-transparent rounded-br-full"></div>
-              <div className="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-tl from-[#fe7245]/20 to-transparent rounded-tl-full"></div>
+              <div className="absolute top-0 left-0 w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-[#0a214f]/20 to-transparent rounded-br-full"></div>
+              <div className="absolute bottom-0 right-0 w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-tl from-[#fe7245]/20 to-transparent rounded-tl-full"></div>
               
               <div className="relative z-10">
-                <div className="inline-block mb-4">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0a214f] to-[#1a3a6b] flex items-center justify-center shadow-lg mx-auto">
-                    <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="inline-block mb-3 sm:mb-4">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#0a214f] to-[#1a3a6b] flex items-center justify-center shadow-lg mx-auto">
+                    <svg className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                     </svg>
                   </div>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-bold text-[#0a214f] mb-3">Still have questions?</h3>
-                <p className="text-base md:text-lg text-gray-700 mb-6">Chat with us online for instant support</p>
-                <button className="group/btn relative bg-[#fe7245] text-white font-semibold px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden border-2 border-[#fe7245] hover:bg-[#ff855f]">
-                  <span className="relative z-10 flex items-center gap-2 text-base">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0a214f] mb-2 sm:mb-3 px-2">Still have questions?</h3>
+                <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-4 sm:mb-6 px-2">Chat with us online for instant support</p>
+                <button className="group/btn relative bg-[#fe7245] text-white font-semibold px-6 sm:px-8 py-2.5 sm:py-3 rounded-full transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl overflow-hidden border-2 border-[#fe7245] hover:bg-[#ff855f] text-sm sm:text-base">
+                  <span className="relative z-10 flex items-center gap-2">
                     <span>Chat Online</span>
-                    <svg className="w-5 h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                   </span>
