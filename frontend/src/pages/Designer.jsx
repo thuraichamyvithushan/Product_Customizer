@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { fetchPhoneModels } from "../api/phoneModelApi.js";
 import { useCart } from "../context/CartContext.jsx";
 
-const Designer = () => {
+const Designer = () => { 
   const canvasEl = useRef(null);
   const canvasRef = useRef(null);
   const navigate = useNavigate();
