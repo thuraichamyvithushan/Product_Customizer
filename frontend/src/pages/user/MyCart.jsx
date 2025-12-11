@@ -6,14 +6,14 @@ import { useCart } from "../../context/CartContext.jsx";
 const MyCart = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
-  const { items, clear, removeItem, total } = useCart();
+  const { item, clear } = useCart();
 
   if (!isAuthenticated) {
     navigate("/login");
     return null;
   }
 
-  if (!items || items.length === 0) {
+  if (!item) {
     return (
       <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-8 md:flex-row">
         <UserSidebar />
@@ -48,70 +48,61 @@ const MyCart = () => {
       <main className="flex-1 space-y-6">
         <div>
           <h1 className="text-2xl font-semibold text-slate-800">My Cart</h1>
-          <p className="text-sm text-slate-500">Review your designs before checkout.</p>
+          <p className="text-sm text-slate-500">Review your design before checkout.</p>
         </div>
-
         <div className="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
-          <div className="flex flex-col gap-6">
-            {items.map((item, idx) => (
-              <div key={idx} className="flex flex-col md:flex-row gap-4 border-b border-slate-100 pb-4">
-                <div className="flex-1">
-                  <div className="flex justify-center rounded-xl border border-slate-200 bg-slate-900/5 p-4">
-                    <img
-                      src={item.designImage}
-                      alt={item.phoneModel}
-                      className="h-48 rounded-lg object-contain"
-                    />
+          <div className="flex flex-col gap-6 md:flex-row">
+            <div className="flex-1">
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold text-slate-800">Design Preview</h3>
+                <p className="text-sm text-slate-500">Phone Model: {item.phoneModel}</p>
+              </div>
+              <div className="flex justify-center rounded-xl border border-slate-200 bg-slate-900/5 p-4">
+                <img
+                  src={item.designImage}
+                  alt="Design preview"
+                  className="h-96 rounded-lg object-contain"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col gap-4 md:w-80">
+              <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                <h4 className="mb-3 text-sm font-semibold text-slate-800">Order Summary</h4>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">Phone Model:</span>
+                    <span className="font-medium text-slate-800">{item.phoneModel}</span>
                   </div>
-                  <p className="mt-2 text-sm font-medium text-slate-700">{item.phoneModel}</p>
-                </div>
-                <div className="flex flex-col justify-between md:w-64 gap-2">
-                  <div className="flex justify-between text-sm text-slate-600">
-                    <span>Quantity:</span>
-                    <span>{item.quantity}</span>
+                  <div className="flex justify-between">
+                    <span className="text-slate-600">Quantity:</span>
+                    <span className="font-medium text-slate-800">1</span>
                   </div>
-                  <div className="flex justify-between text-sm text-slate-600">
-                    <span>Price:</span>
-                    <span>Rs {item.price}</span>
-                  </div>
-                  <div className="flex justify-between font-semibold text-accent">
-                    <span>Subtotal:</span>
-                    <span>Rs {item.price * item.quantity}</span>
-                  </div>
-                  <button
-                    onClick={() => removeItem(idx)}
-                    className="mt-2 w-full rounded-full bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-100"
-                  >
-                    Remove
-                  </button>
                 </div>
               </div>
-            ))}
-            <div className="flex justify-between pt-4 font-semibold text-slate-800 text-lg">
-              <span>Total:</span>
-              <span>Rs {total}</span>
-            </div>
-            <div className="flex flex-col gap-3 md:flex-row">
-              <button
-                onClick={() => navigate("/checkout")}
-                className="w-full rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white hover:bg-accent-dark"
-              >
-                Proceed to Checkout
-              </button>
-              <button
-                onClick={() => navigate("/design")}
-                className="w-full rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
-              >
-                Add More Designs
-              </button>
-              <button
-                onClick={() => {
-                  if (window.confirm("Remove all items from cart?")) clear();
-                }}
-                className="w-full rounded-full bg-rose-50 px-6 py-3 text-sm font-semibold text-rose-600 hover:bg-rose-100"
-              >
-                Clear Cart
-              </button>
+              <div className="flex flex-col gap-3">
+                <button
+                  onClick={() => navigate("/checkout")}
+                  className="w-full rounded-full bg-accent px-6 py-3 text-sm font-semibold text-white hover:bg-accent-dark"
+                >
+                  Proceed to Checkout
+                </button>
+                <button
+                  onClick={() => navigate("/design")}
+                  className="w-full rounded-full border border-slate-200 px-6 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+                >
+                  Edit Design
+                </button>
+                <button
+                  onClick={() => {
+                    if (window.confirm("Remove this item from cart?")) {
+                      clear();
+                    }
+                  }}
+                  className="w-full rounded-full bg-rose-50 px-6 py-3 text-sm font-semibold text-rose-600 hover:bg-rose-100"
+                >
+                  Remove from Cart
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -121,3 +112,4 @@ const MyCart = () => {
 };
 
 export default MyCart;
+

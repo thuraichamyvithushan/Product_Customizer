@@ -13,8 +13,7 @@ import {
   deletePhoneModel,
   getPhoneModels,
   addTemplateToModel,
-  removeTemplateFromModel,
-  updatePhoneModelMockup
+  removeTemplateFromModel
 } from "../controllers/phoneModelController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { adminOnly } from "../middleware/adminMiddleware.js";
@@ -31,7 +30,6 @@ router.post("/phone-models", protect, adminOnly, createPhoneModel);
 router.delete("/phone-models/:id", protect, adminOnly, deletePhoneModel);
 router.post("/phone-models/:id/templates", protect, adminOnly, addTemplateToModel);
 router.delete("/phone-models/:id/templates/:templateIndex", protect, adminOnly, removeTemplateFromModel);
-router.patch("/phone-models/:id/mockup", protect, adminOnly, updatePhoneModelMockup);
 
 // Order confirmation
 router.post("/orders/:id/confirm", protect, adminOnly, confirmOrder);

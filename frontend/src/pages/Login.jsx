@@ -28,10 +28,10 @@ const Login = () => {
       setLoading(false);
     }
   };
-
+              
   return (
-    <div className="flex min-h-[80vh] items-center justify-center bg-slate-50 px-4">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
+    <div className="flex min-h-[80vh] items-center justify-center bg-slate-50 px-4 ">
+      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg ">
         <h2 className="text-2xl font-semibold text-slate-800">Welcome back</h2>
         <p className="mt-2 text-sm text-slate-500">Sign in to continue designing.</p>
         <form className="mt-6 flex flex-col gap-4" onSubmit={handleSubmit}>
@@ -62,20 +62,12 @@ const Login = () => {
             {loading ? "Signing in..." : "Login"}
           </button>
         </form>
-        <div className="mt-4 space-y-2 text-sm">
-          <p className="text-slate-500">
-            Need an account?{" "}
-            <Link to="/register" className="text-brand">
-              Register
-            </Link>
-          </p>
-          <p className="text-slate-500">
-            Forgot your password?{" "}
-            <Link to="/forgot-password" className="text-brand">
-              Reset Password
-            </Link>
-          </p>
-        </div>
+        <p className="mt-4 text-sm text-slate-500">
+          Need an account?{" "}
+          <Link to="/register" className="text-brand">
+            Register
+          </Link>
+        </p>
       </div>
     </div>
   );

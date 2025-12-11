@@ -42,13 +42,3 @@ export const fetchProfile = async (token) => {
   return data;
 };
 
-export const forgotPassword = async (email) => {
-  const { data } = await authClient.post("/forgot-password", { email });
-  return data;
-};
-
-export const resetPassword = async (token, password) => {
-  const { data } = await authClient.post("/reset-password", { token, password });
-  return data;
-};
-

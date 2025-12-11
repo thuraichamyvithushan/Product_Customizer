@@ -1,25 +1,31 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { useAuth } from "./context/AuthContext.jsx";
 import Navbar from "./components/Navbar.jsx";
-import Footer from "./components/Footer.jsx"
-import Home from "./pages/Home.jsx";
-import Designer from "./pages/Designer.jsx";
-import PetDesigner from "./pages/PetDesigner.jsx";
-import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
-import ForgotPassword from "./pages/ForgotPassword.jsx";
-import ResetPassword from "./pages/ResetPassword.jsx";
-import Success from "./pages/Success.jsx";
-import Checkout from "./pages/Checkout.jsx";
+import Footer from "./components/Footer.jsx";
 import AdminLogin from "./admin/AdminLogin.jsx";
 import AdminDashboard from "./admin/AdminDashboard.jsx";
 import OrderList from "./admin/OrderList.jsx";
 import PhoneModelManager from "./admin/PhoneModelManager.jsx";
-import PetProductManager from "./admin/PetProductManager.jsx";
 import UserManager from "./admin/UserManager.jsx";
+import Home from "./pages/Home.jsx";
+import Designer from "./pages/Designer.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import Success from "./pages/Success.jsx";
+import Checkout from "./pages/Checkout.jsx";
 import UserDashboard from "./pages/user/UserDashboard.jsx";
 import MyOrders from "./pages/user/MyOrders.jsx";
 import MyCart from "./pages/user/MyCart.jsx";
-import { useAuth } from "./context/AuthContext.jsx";
+import PetHome from "./pages/PetHome.jsx";
+import PhoneHome from "./pages/PhoneHome.jsx";
+import FAQ from "./pages/FAQ.jsx";
+import Contact from "./pages/Contact.jsx";
+import About from "./pages/About.jsx";
+import StoreLocator from "./pages/StoreLocator.jsx";
+import Blog from "./pages/Blog.jsx";
+import BlogPost from "./pages/blogpost/BlogPost.jsx";
+
 
 const ADMIN_STORAGE_KEY = "cpc_admin_token";
 
@@ -43,11 +49,17 @@ const AppLayout = ({ children }) => {
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
   const isUserRoute = location.pathname.startsWith("/user");
+
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
   return (
     <>
       {!isAdminRoute && <Navbar />}
       {children}
-       {!isAdminRoute && <Footer />}
+      {!isAdminRoute && <Footer />}
     </>
   );
 };
@@ -57,14 +69,19 @@ const App = () => {
     <AppLayout>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/pet-center" element={<PetHome />} />
+        <Route path="/custom-mobilecase" element={<PhoneHome />} />
         <Route path="/design" element={<Designer />} />
-        <Route path="pet-design" element={<PetDesigner/>}/>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/success" element={<Success />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/store-locator" element={<StoreLocator />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
 
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route
@@ -83,20 +100,11 @@ const App = () => {
             </AdminRoute>
           }
         />
-
         <Route
           path="/admin/models"
           element={
             <AdminRoute>
               <PhoneModelManager />
-            </AdminRoute>
-          }
-        />
-        <Route
-          path="/admin/pet-products"
-          element={
-            <AdminRoute>
-              <PetProductManager />
             </AdminRoute>
           }
         />

@@ -2,40 +2,23 @@ import Order from "../models/Order.js";
 
 export const createOrder = async (req, res, next) => {
   try {
-    const { items, fullName, email, phone, address, total } = req.body;
+    const { phoneModel, designImage, fullName, email, phone, address, quantity } = req.body;
 
-    if (!items || !Array.isArray(items) || items.length === 0) {
-      return res.status(400).json({ message: "At least one item is required" });
+    if (!phoneModel || !designImage || !fullName || !email || !phone || !address) {
+      return res
+        .status(400)
+        .json({ message: "phoneModel, designImage and customer details are required" });
     }
-
-    if (!fullName || !email || !phone || !address) {
-      return res.status(400).json({ message: "Customer details are required" });
-    }
-
-    // Basic validation for items
-    const sanitizedItems = items.map((item) => ({
-      productId: item.productId,
-      productName: item.productName,
-      designImage: item.designImage,
-      templateImage: item.templateImage || "",
-      userCustomImage: item.userCustomImage || "",
-      price: Number(item.price) || 0,
-      quantity: Number(item.quantity) || 1
-    }));
-
-    const computedTotal = sanitizedItems.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
 
     const order = await Order.create({
       userId: req.user.id,
-      items: sanitizedItems,
+      phoneModel,
+      designImage,
       fullName,
       email,
       phone,
       address,
-      total: total || computedTotal
+      quantity: quantity || 1
     });
 
     res.status(201).json(order);

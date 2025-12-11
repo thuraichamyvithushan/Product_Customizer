@@ -81,7 +81,7 @@ const UserManager = () => {
   };
 
   return (
-    <div className="mx-auto flex max-w-8xl flex-col gap-8 px-4 py-8 md:flex-row">
+    <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-8 md:flex-row">
       <AdminSidebar />
       <main className="flex-1 space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4">

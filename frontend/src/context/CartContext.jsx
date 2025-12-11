@@ -1,54 +1,32 @@
-import { createContext, useContext, useMemo, useState, useEffect } from "react";
+import { createContext, useContext, useMemo, useState } from "react";
 
 const CartContext = createContext({
-  items: [],
-  addItem: () => {},
-  removeItem: () => {},
-  clear: () => {},
-  total: 0
+  item: null,
+  setItem: () => {},
+  clear: () => {}
 });
 
 export const CartProvider = ({ children }) => {
+  const [item, setItemState] = useState(null);
 
-  const [items, setItems] = useState(() => {
-    const saved = localStorage.getItem("cartItems");
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(items));
-  }, [items]);
-
-  const addItem = (payload) => {
-    setItems((prev) => [...prev, payload]);
+  const setItem = (payload) => {
+    setItemState(payload);
   };
 
-  const removeItem = (index) => {
-    setItems((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const clear = () => {
-    setItems([]);
-    localStorage.removeItem("cartItems");
-  };
-
-  const total = items.reduce(
-    (sum, item) => sum + (item.price || 0) * (item.quantity || 1),
-    0
-  );
+  const clear = () => setItemState(null);
 
   const value = useMemo(
     () => ({
-      items,
-      addItem,
-      removeItem,
-      clear,
-      total
+      item,
+      setItem,
+      clear
     }),
-    [items, total]
+    [item]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
 export const useCart = () => useContext(CartContext);
+
+

@@ -55,17 +55,4 @@ export const adminRemoveTemplateFromModel = async (modelId, templateIndex, token
   return data;
 };
 
-export const adminUpdateModelMockup = async (modelId, mockupImage, coverArea, coverSize, token) => {
-  const { data } = await adminClient.patch(
-    `/${modelId}/mockup`,
-    { mockupImage, coverArea, coverSize },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-  );
-  return data;
-};
-
 

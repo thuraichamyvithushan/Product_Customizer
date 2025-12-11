@@ -1,17 +1,34 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useCart } from "../context/CartContext.jsx";
-import { useState, useEffect, useRef } from "react";
-import logo from "../assets/logo.PNG";
+import logo from "../assets/logo/logo.png";
+import { ShoppingBag, Menu, X, ChevronDown, Sparkles } from "lucide-react";
 
 const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuth();
-  const { items } = useCart();
+  const { item } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [open, setOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [infoOpen, setInfoOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const profileRef = useRef(null);
+  const infoRef = useRef(null);
+
+
+
+
+
+  const isInfoPageActive =
+    location.pathname === "/about" ||
+    location.pathname === "/blog" ||
+    location.pathname === "/store-locator" ||
+    location.pathname === "/contact" ||
+    location.pathname === "/faq";
+
 
   const handleLogout = () => {
     logout();
@@ -47,11 +64,18 @@ const Navbar = () => {
     setOpen(false);
   }, [navigate]);
 
+
+  // Close mobile menu & info dropdown on route change
+  useEffect(() => {
+    setOpen(false);       // Close mobile menu
+    setInfoOpen(false);   // Close Info dropdown
+  }, [location.pathname]);
+
   return (
+
     <nav
-      className={`sticky top-0 z-50 bg-[#0a214f] transition-all duration-300 ${
-        scrolled ? "shadow-lg py-2" : "shadow-md py-3"
-      }`}
+      className={`sticky top-0 z-50 bg-white transition-all duration-300 ${scrolled ? "shadow-lg py-2" : "shadow-md py-3"
+        }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 lg:px-6">
         {/* LOGO */}
@@ -61,8 +85,8 @@ const Navbar = () => {
         >
           <img
             src={logo}
-            alt="Logo"
-            className="h-9 w-auto object-contain sm:h-11 md:h-12"
+            alt="CaseCraft"
+            className="h-10 w-auto sm:h-11 md:h-12 object-contain transition-transform group-hover:scale-110 duration-300"
           />
         </Link>
 
@@ -70,120 +94,208 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center gap-1 xl:gap-2">
           <NavLink
             to="/"
+            onClick={() => setInfoOpen(false)}
             className={({ isActive }) =>
-              `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                isActive
-                  ? "text-[#fe7245] bg-white/10"
-                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
-              }`
+              `relative px-5 py-3 text-md font-semibold transition-all duration-300
+                  ${isActive ? "text-[#fe7245]" : "text-gray-800 hover:text-[#fe7245]"}
+                  after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-[#fe7245] after:transition-all hover:after:w-8`
             }
           >
             Home
           </NavLink>
 
           <NavLink
-            to="/design"
+            to="/custom-mobilecase"
+            onClick={() => setInfoOpen(false)}
             className={({ isActive }) =>
-              `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                isActive
-                  ? "text-[#fe7245] bg-white/10"
-                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
-              }`
+              `relative px-5 py-3 text-md font-semibold transition-all duration-300
+                  ${isActive ? "text-[#fe7245]" : "text-gray-800 hover:text-[#fe7245]"}
+                  after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-[#fe7245] after:transition-all hover:after:w-8`
             }
           >
-            Design
+            Phone Cases
           </NavLink>
 
-          {/* CART */}
-          {isAuthenticated && items.length > 0 && user?.role !== "admin" && (
+          <NavLink
+            to="/pet-center"
+            onClick={() => setInfoOpen(false)}
+            className={({ isActive }) =>
+              `relative px-5 py-3 text-md font-semibold transition-all duration-300
+                  ${isActive ? "text-[#fe7245]" : "text-gray-800 hover:text-[#fe7245]"}
+                  after:absolute after:bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-[#fe7245] after:transition-all hover:after:w-8`
+            }
+          >
+            Pet Gifts
+          </NavLink>
+
+
+          {/* INFO DROPDOWN */}
+          <div className="relative" ref={infoRef}
+            onMouseEnter={() => setInfoOpen(true)}
+            onMouseLeave={() => setInfoOpen(false)}
+          >
+            <button
+              onClick={() => setInfoOpen(!infoOpen)}
+              className={`px-3 xl:px-4 py-2 text-md font-semibold rounded-lg transition-all flex items-center gap-1 ${infoOpen || isInfoPageActive
+                ? "text-[#fe7245] bg-white/10"
+                : "text-[#0a214f] hover:text-[#fe7245] hover:bg-white/5"
+                }`}
+            >
+              Info
+              <svg
+                className={`w-4 h-4 transition-transform ${infoOpen ? "rotate-180" : ""}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            {/* DROPDOWN MENU */}
+            {infoOpen && (
+              <div className="absolute right-0  w-48 rounded-xl bg-white shadow-xl py-2 border border-gray-100 z-50">
+                <NavLink
+                  to="/about"
+                  onClick={() => setInfoOpen(false)}
+                  className={({ isActive }) =>
+                    `block px-4 py-2.5 text-md font-semibold transition-colors ${isActive
+                      ? "text-[#fe7245] bg-blue-50"
+                      : "text-gray-700 hover:text-[#fe7245] hover:bg-blue-50"
+                    }`
+                  }
+                >
+                  About Us
+                </NavLink>
+
+                <NavLink
+                  to="/blog"
+                  className={({ isActive }) =>
+                    `block px-4 py-2.5 text-md font-semibold transition-colors ${isActive
+                      ? "text-[#fe7245] bg-blue-50"
+                      : "text-gray-700 hover:text-[#fe7245] hover:bg-blue-50"
+                    }`
+                  }
+                >
+                  Blog
+                </NavLink>
+
+                <NavLink
+                  to="/store-locator"
+                  className={({ isActive }) =>
+                    `block px-4 py-2.5 text-md font-semibold transition-colors ${isActive
+                      ? "text-[#fe7245] bg-blue-50"
+                      : "text-gray-700 hover:text-[#fe7245] hover:bg-blue-50"
+                    }`
+                  }
+                >
+                  Store Locator
+                </NavLink>
+
+                <NavLink
+                  to="/contact"
+                  onClick={() => setInfoOpen(false)}
+                  className={({ isActive }) =>
+                    `block px-4 py-2.5 text-md font-semibold transition-colors ${isActive
+                      ? "text-[#fe7245] bg-blue-50"
+                      : "text-gray-700 hover:text-[#fe7245] hover:bg-blue-50"
+                    }`
+                  }
+                >
+                  Contact
+                </NavLink>
+
+                <NavLink
+                  to="/faq"
+                  onClick={() => setInfoOpen(false)}
+                  className={({ isActive }) =>
+                    `block px-4 py-2.5 text-md font-semibold transition-colors ${isActive
+                      ? "text-[#fe7245] bg-blue-50"
+                      : "text-gray-700 hover:text-[#fe7245] hover:bg-blue-50"
+                    }`
+                  }
+                >
+                  FAQ
+                </NavLink>
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Cart */}
+          {isAuthenticated && item > 0 && user?.role !== "admin" && (
             <NavLink
               to="/user/cart"
-              className="relative rounded-full bg-[#fe7245] px-4 py-2 text-sm font-semibold text-white shadow-md transition-all hover:bg-[#ff855f] hover:shadow-lg"
+              className="relative ml-6 px-7 py-3 bg-gradient-to-r from-[#fe7245] to-pink-600 text-white rounded-full font-bold shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-3"
             >
+              <ShoppingBag className="w-5 h-5" />
               Cart
               <span className="ml-1.5 inline-flex h-5 w-5 items-center justify-center rounded-full bg-white text-xs font-bold text-[#fe7245]">
-                {items.length}
+                {item}
               </span>
             </NavLink>
           )}
 
+
+          {/* Desktop Authenticated User */}
           {isAuthenticated ? (
             <>
-              {/* User Panel */}
-              {user?.role !== "admin" && (
-                <NavLink
-                  to="/user/dashboard"
-                  className={({ isActive }) =>
-                    `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                      isActive
-                        ? "text-[#fe7245] bg-white/10"
-                        : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                    }`
-                  }
-                >
-                  User Panel
-                </NavLink>
-              )}
 
-              {/* Admin Panel */}
-              {user?.role === "admin" && (
-                <NavLink
-                  to="/admin/dashboard"
-                  className={({ isActive }) =>
-                    `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                      isActive
-                        ? "text-[#fe7245] bg-white/10"
-                        : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                    }`
-                  }
-                >
-                  Admin Panel
-                </NavLink>
-              )}
-
-              {/* USER PROFILE DROPDOWN */}
-              <div className="relative ml-2" ref={profileRef}>
+              {/* Desktop PROFILE DROPDOWN */}
+              <div className="relative ml-6" ref={profileRef}>
                 <button
                   onClick={() => setProfileOpen(!profileOpen)}
-                  className="flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 transition-all hover:bg-white/20"
+                  className="flex items-center gap-3 px-5 py-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300"
                 >
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-[#fe7245] to-[#ff6b3d] text-sm font-bold text-white shadow-md">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#fe7245] to-pink-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">
                     {initial}
                   </div>
-                  <span className="text-sm font-medium text-white max-w-[120px] truncate">
-                    {user?.name || user?.email}
+                  <span className="hidden xl:block font-medium text-gray-800">
+                    Hi, {user?.name?.split(" ")[0] || "User"}
                   </span>
-                  <svg
-                    className={`w-4 h-4 text-white transition-transform ${
-                      profileOpen ? "rotate-180" : ""
-                    }`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
+                  <ChevronDown
+                    className={`w-4 h-4 text-gray-600 transition-transform ${profileOpen ? "rotate-180" : ""
+                      }`}
+                  />
                 </button>
 
-                {/* DROPDOWN BOX */}
+                {/* Desktop  DROPDOWN BOX */}
                 {profileOpen && (
-                  <div className="absolute right-0 mt-2 w-48 rounded-xl bg-white shadow-xl py-2 border border-gray-100">
-                    <div className="px-4 py-2 border-b border-gray-100">
-                      <p className="text-xs font-semibold text-gray-900 truncate">
-                        {user?.name || user?.email}
-                      </p>
-                      <p className="text-xs text-gray-500 truncate">
-                        {user?.email}
-                      </p>
+                  <div className="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
+                    <div className="p-5 border-b border-gray-100">
+                      <p className="font-bold text-gray-900">{user?.name || "User"}</p>
+                      <p className="text-sm text-gray-500 truncate">{user?.email}</p>
                     </div>
+
+                    {user?.role === "admin" ? (
+                      <Link
+                        to="/admin/dashboard"
+                        onClick={() => setProfileOpen(false)}
+                        className="block px-5 py-4 text-gray-700 hover:bg-gray-50 transition"
+                      >
+                        Admin Panel
+                      </Link>
+                    ) : (
+                      <Link
+                        to="/user/dashboard"
+                        onClick={() => setProfileOpen(false)}
+                        className="block px-5 py-4 text-gray-700 hover:bg-gray-50 transition"
+                      >
+                        My Panel
+                      </Link>
+                    )}
+
+                    {/* Logout */}
                     <button
-                      onClick={handleLogout}
-                      className="w-full text-left px-4 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors flex items-center gap-2"
+                      onClick={() => {
+                        handleLogout();
+                        setProfileOpen(false);
+                      }}
+                      className="w-full text-left px-5 py-3 text-red-600 hover:bg-red-50 font-medium transition flex items-center gap-2"
                     >
                       <svg
                         className="w-4 h-4"
@@ -205,48 +317,29 @@ const Navbar = () => {
               </div>
             </>
           ) : (
+
             <>
               <NavLink
                 to="/login"
-                className={({ isActive }) =>
-                  `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                    isActive
-                      ? "text-[#fe7245] bg-white/10"
-                      : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                  }`
-                }
+                onClick={() => setOpen(false)}
+                className="px-8 py-3 bg-gradient-to-r from-[#fe7245] to-pink-600 text-white rounded-full font-bold shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex items-center gap-2"
               >
+                <Sparkles className="w-5 h-5" />
                 Login
               </NavLink>
 
-              <NavLink
-                to="/register"
-                className={({ isActive }) =>
-                  `px-3 xl:px-4 py-2 text-sm font-medium rounded-lg transition-all ${
-                    isActive
-                      ? "text-[#fe7245] bg-white/10"
-                      : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                  }`
-                }
-              >
-                Register
-              </NavLink>
+
             </>
           )}
 
-          {/* CONTACT US */}
-          <NavLink
-            to="/contact"
-            className="ml-2 px-5 py-2 text-sm font-semibold rounded-full bg-[#fe7245] text-white shadow-md transition-all hover:bg-[#ff855f] hover:shadow-lg hover:scale-105"
-          >
-            Contact Us
-          </NavLink>
         </div>
+
+        {/* Mobile Section */}
 
         {/* MOBILE TOGGLE BUTTON */}
         <button
           onClick={() => setOpen(!open)}
-          className="lg:hidden text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
+          className="lg:hidden text-[#0a214f] p-2 rounded-lg hover:bg-white/10 transition-colors"
           aria-label="Toggle menu"
         >
           {open ? (
@@ -283,19 +376,17 @@ const Navbar = () => {
 
       {/* MOBILE MENU */}
       <div
-        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          open ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
-        }`}
+        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${open ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+          }`}
       >
         <div className="px-4 pt-4 pb-6 space-y-2 bg-[#0a214f] border-t border-white/10">
           <NavLink
             to="/"
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
-              `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
-                isActive
-                  ? "text-[#fe7245] bg-white/10"
-                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
+              `block px-4 py-3 text-md font-semibold rounded-lg transition-all ${isActive
+                ? "text-[#fe7245] bg-white/10"
+                : "text-white hover:text-[#fe7245] hover:bg-white/5"
               }`
             }
           >
@@ -303,148 +394,256 @@ const Navbar = () => {
           </NavLink>
 
           <NavLink
-            to="/design"
+            to="/custom-mobilecase"
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
-              `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
-                isActive
-                  ? "text-[#fe7245] bg-white/10"
-                  : "text-white hover:text-[#fe7245] hover:bg-white/5"
+              `block px-4 py-3 text-md font-semibold rounded-lg transition-all ${isActive
+                ? "text-[#fe7245] bg-white/10"
+                : "text-white hover:text-[#fe7245] hover:bg-white/5"
               }`
             }
           >
-            Design
+            Phone Cases
           </NavLink>
 
-          {/* CART */}
-          {isAuthenticated && items.length > 0 && user?.role !== "admin" && (
+          <NavLink
+            to="/pet-center"
+            onClick={() => setOpen(false)}
+            className={({ isActive }) =>
+              `block px-4 py-3 text-md font-semibold rounded-lg transition-all ${isActive
+                ? "text-[#fe7245] bg-white/10"
+                : "text-white hover:text-[#fe7245] hover:bg-white/5"
+              }`
+            }
+          >
+            Pet Gifts
+          </NavLink>
+
+          {/* INFO DROPDOWN MOBILE */}
+
+          <div
+            className="space-y-1 "
+          >
+
+            <button
+              onClick={() => setInfoOpen(!infoOpen)}
+              className={`w-full flex items-center justify-between px-4 py-3 text-md font-semibold rounded-lg transition-all ${infoOpen || isInfoPageActive
+                ? "text-[#fe7245] bg-white/10"
+                : "text-white hover:text-[#fe7245] hover:bg-white/5"
+                }`}
+            >
+              <span>Info</span>
+              <svg
+                className={`w-4 h-4 transition-transform ${infoOpen ? "rotate-180" : ""}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </button>
+
+            {/* Mobile DROPDOWN ITEMS */}
+            {infoOpen && (
+              <div className="pl-4 space-y-1">
+                <NavLink
+                  to="/about"
+                  onClick={() => {
+                    setInfoOpen(false);
+                    setOpen(false);
+                  }}
+                  className={({ isActive }) =>
+                    `block px-4 py-2 text-md font-semibold rounded-lg transition-all ${isActive
+                      ? "text-[#fe7245] bg-white/10"
+                      : "text-white/80 hover:text-[#fe7245] hover:bg-white/5"
+                    }`
+                  }
+                >
+                  About Us
+                </NavLink>
+                <NavLink
+                  to="/blog"
+                  onClick={() => {
+                    setInfoOpen(false);
+                    setOpen(false);
+                  }}
+                  className={({ isActive }) =>
+                    `block px-4 py-2 text-md font-semibold rounded-lg transition-all ${isActive
+                      ? "text-[#fe7245] bg-white/10"
+                      : "text-white/80 hover:text-[#fe7245] hover:bg-white/5"
+                    }`
+                  }
+                >
+                  Blog
+                </NavLink>
+
+                <NavLink
+                  to="/store-locator"
+                  onClick={() => {
+                    setInfoOpen(false);
+                    setOpen(false);
+                  }}
+                  className={({ isActive }) =>
+                    `block px-4 py-2 text-md font-semibold rounded-lg transition-all ${isActive
+                      ? "text-[#fe7245] bg-white/10"
+                      : "text-white/80 hover:text-[#fe7245] hover:bg-white/5"
+                    }`
+                  }
+                >
+                  Store Locator
+                </NavLink>
+
+                <NavLink
+                  to="/contact"
+                  onClick={() => {
+                    setInfoOpen(false);
+                    setOpen(false);
+                  }}
+                  className={({ isActive }) =>
+                    `block px-4 py-2 text-md font-semibold rounded-lg transition-all ${isActive
+                      ? "text-[#fe7245] bg-white/10"
+                      : "text-white/80 hover:text-[#fe7245] hover:bg-white/5"
+                    }`
+                  }
+                >
+                  Contact
+                </NavLink>
+
+                <NavLink
+                  to="/faq"
+                  onClick={() => {
+                    setInfoOpen(false);
+                    setOpen(false);
+                  }}
+                  className={({ isActive }) =>
+                    `block px-4 py-2 text-md font-semibold rounded-lg transition-all ${isActive
+                      ? "text-[#fe7245] bg-white/10"
+                      : "text-white/80 hover:text-[#fe7245] hover:bg-white/5"
+                    }`
+                  }
+                >
+                  FAQ
+                </NavLink>
+              </div>
+            )}
+          </div>
+
+          {/* Mobile Cart */}
+          {isAuthenticated && item > 0 && user?.role !== "admin" && (
             <NavLink
               to="/user/cart"
               onClick={() => setOpen(false)}
-              className="flex items-center justify-between px-4 py-3 text-sm font-semibold rounded-lg bg-[#fe7245] text-white transition-all hover:bg-[#ff855f]"
+              className="flex items-center justify-between px-4 py-3 mt-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-[#fe7245] to-pink-600 text-white transition-all hover:from-[#ff855f] hover:to-pink-500"
             >
               <span>Cart</span>
               <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-white text-xs font-bold text-[#fe7245]">
-                {items.length}
+                {item}
               </span>
             </NavLink>
           )}
 
           {isAuthenticated ? (
-            <>
-              {/* User Panel */}
-              {user?.role !== "admin" && (
-                <NavLink
-                  to="/user/dashboard"
-                  onClick={() => setOpen(false)}
-                  className={({ isActive }) =>
-                    `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
-                      isActive
-                        ? "text-[#fe7245] bg-white/10"
-                        : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                    }`
-                  }
-                >
-                  User Panel
-                </NavLink>
-              )}
-
-              {/* Admin Panel */}
-              {user?.role === "admin" && (
-                <NavLink
-                  to="/admin/dashboard"
-                  onClick={() => setOpen(false)}
-                  className={({ isActive }) =>
-                    `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
-                      isActive
-                        ? "text-[#fe7245] bg-white/10"
-                        : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                    }`
-                  }
-                >
-                  Admin Panel
-                </NavLink>
-              )}
-
-              {/* USER PROFILE */}
-              <div className="px-4 py-3 rounded-lg bg-white/5">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-[#fe7245] to-[#ff6b3d] text-sm font-bold text-white shadow-md">
-                    {initial}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-semibold text-white truncate">
-                      {user?.name || user?.email}
-                    </p>
-                    <p className="text-xs text-gray-300 truncate">
-                      {user?.email}
-                    </p>
-                  </div>
+            <div className="relative" ref={profileRef}>
+              {/* Profile Button */}
+              <button
+                onClick={() => setProfileOpen(!profileOpen)}
+                className=" max-w-xs  font-bold shadow-xl  hover:shadow-2xl hover:scale-105  flex gap-2 items-center px-5 py-3 rounded-full bg-gray-100 hover:bg-gray-200 transition-all duration-300 w-fit"
+              >
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#fe7245] to-pink-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                  {initial}
                 </div>
-                <button
-                  onClick={() => {
-                    handleLogout();
-                    setOpen(false);
-                  }}
-                  className="w-full px-4 py-2.5 text-sm font-medium text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors flex items-center justify-center gap-2"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                <span className="font-medium text-gray-800 truncate">
+                  Hi, {user?.name?.split(" ")[0] || "User"}
+                </span>
+                <ChevronDown
+                  className={`w-4 h-4 text-gray-600 transition-transform ${profileOpen ? "rotate-180" : ""
+                    }`}
+                />
+              </button>
+
+              {/*  Mobile Profile dropdown */}
+              {profileOpen && (
+                <div className="absolute right-0 bottom-0  w-full max-w-xs bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden flex flex-col gap-2 p-3">
+                  <div className="px-3 py-2 border-b border-gray-100">
+                    <p className="font-bold text-gray-900 truncate">{user?.name || "User"}</p>
+                    <p className="text-sm text-gray-500 truncate">{user?.email}</p>
+                  </div>
+
+                  {/* Dashboard Link */}
+                  {user?.role === "admin" ? (
+
+                    <Link
+                      to="/admin/dashboard"
+                      className="block px-4 py-3 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+                    >
+                      Admin Panel
+                    </Link>
+                  ) : (
+                    <Link
+                      to="/user/dashboard"
+                      className="block px-4 py-3 text-gray-700 rounded-lg hover:bg-gray-50 transition"
+                    >
+                      My Panel
+                    </Link>
+                  )}
+
+                  {/* Cart Link (if items > 0) */}
+                  {/* {item > 0 && (
+          <Link
+            to="/user/cart"
+            onClick={() => setMobileOpen(false)}
+            className="block w-full py-3 mt-2 text-center bg-gradient-to-r from-[#fe7245] to-pink-600 text-white rounded-full font-bold shadow-md hover:shadow-lg transition-all"
+          >
+            Cart ({item} items)
+          </Link>
+        )} */}
+
+                  {/* Logout Button */}
+                  <button
+                    onClick={handleLogout}
+                    className="w-full px-4 py-3 text-left text-red-600 font-medium rounded-lg hover:bg-red-50 transition flex items-center gap-2"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                    />
-                  </svg>
-                  Logout
-                </button>
-              </div>
-            </>
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                      />
+                    </svg>
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
             <>
+              {/* Mobile Login Button */}
+
+
               <NavLink
                 to="/login"
                 onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                  `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
-                    isActive
-                      ? "text-[#fe7245] bg-white/10"
-                      : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                  }`
-                }
+                className=" w-full max-w-xs mx-auto text-center py-3 bg-gradient-to-r from-[#fe7245] to-pink-600 text-white rounded-full font-bold shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 flex justify-center items-center gap-2"
               >
+                <Sparkles className="w-5 h-5" />
                 Login
               </NavLink>
 
-              <NavLink
-                to="/register"
-                onClick={() => setOpen(false)}
-                className={({ isActive }) =>
-                  `block px-4 py-3 text-sm font-medium rounded-lg transition-all ${
-                    isActive
-                      ? "text-[#fe7245] bg-white/10"
-                      : "text-white hover:text-[#fe7245] hover:bg-white/5"
-                  }`
-                }
-              >
-                Register
-              </NavLink>
             </>
           )}
 
-          {/* CONTACT US */}
-          <NavLink
-            to="/contact"
-            onClick={() => setOpen(false)}
-            className="block px-4 py-3 text-sm font-semibold rounded-lg bg-[#fe7245] text-white text-center transition-all hover:bg-[#ff855f]"
-          >
-            Contact Us
-          </NavLink>
+
         </div>
       </div>
     </nav>
